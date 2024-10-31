@@ -23,7 +23,7 @@ const authConfig: NextAuthConfig = {
 
         try {
           const res = await fetch(
-            "http://localhost:3000/api/auth/verify-credentials",
+            `${process.env.AUTH_URL}api/auth/verify-credentials`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -59,7 +59,7 @@ const authConfig: NextAuthConfig = {
 
   // TODO: *Spoofing Attacks* add jsclimber.com domain in production trusted only!
   // ! https://authjs.dev/reference/core/errors#untrustedhost
-  trustHost: true,
+  // trustHost: true,
 };
 
 export default authConfig;
