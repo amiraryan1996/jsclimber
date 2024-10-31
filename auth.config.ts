@@ -84,7 +84,7 @@ const authConfig: NextAuthConfig = {
             console.warn(
               "User not found in the database, redirecting to signup."
             );
-            return "admin/signup";
+            return "/admin/signup";
           }
         } catch (error) {
           console.error("Error checking GitHub user in the database:", error);
