@@ -59,7 +59,7 @@ const authConfig: NextAuthConfig = {
 
   // TODO: *Spoofing Attacks* add jsclimber.com domain in production trusted only!
   // ! https://authjs.dev/reference/core/errors#untrustedhost
-  // trustHost: true,
+  trustHost: true,
 };
 
 export default authConfig;
