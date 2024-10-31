@@ -18,21 +18,18 @@ const authConfig: NextAuthConfig = {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       async authorize(credentials, req) {
         console.log("Authorizing user with credentials:", credentials);
-
+        const baseUrl = process.env.AUTH_URL;
         if (!credentials) return null;
 
         try {
-          const res = await fetch(
-            `${process.env.AUTH_URL}api/auth/verify-credentials`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                emailId: credentials.emailId,
-                password: credentials.password,
-              }),
-            }
-          );
+          const res = await fetch(`${baseUrl}api/auth/verify-credentials`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              emailId: credentials.emailId,
+              password: credentials.password,
+            }),
+          });
 
           if (!res.ok) {
             const errorData = await res.json();
@@ -56,10 +53,6 @@ const authConfig: NextAuthConfig = {
     signIn: "/",
   },
   secret: process.env.AUTH_SECRET,
-
-  // TODO: *Spoofing Attacks* add jsclimber.com domain in production trusted only!
-  // ! https://authjs.dev/reference/core/errors#untrustedhost
-  // trustHost: true,
 };
 
 export default authConfig;
