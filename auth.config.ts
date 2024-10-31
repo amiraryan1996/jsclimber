@@ -64,11 +64,17 @@ const authConfig: NextAuthConfig = {
 
         try {
           // Verify GitHub user's email exists in the database
-          const res = await fetch(`${baseUrl}/api/auth/check-user`, {
+          const res = await fetch(`${baseUrl}api/auth/check-user`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ emailId: profile?.email }),
           });
+
+          if (!res.ok) {
+            const errorData = await res.json();
+            console.error("check-user error:", errorData);
+            throw new Error(errorData.message || "check-user failed");
+          }
 
           const { userExists } = await res.json();
           console.log("User exists in the database:", userExists);
