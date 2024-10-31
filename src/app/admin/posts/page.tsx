@@ -1,11 +1,11 @@
 // src/app/admin/posts/page.tsx
 "use client";
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 
 export default function PostsPage() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [posts, setPosts] = useState([]);
-  
+
   useEffect(() => {
     fetchPosts();
   }, []);
@@ -24,7 +24,7 @@ export default function PostsPage() {
 
   return (
     <div>
-      <h1>Manage Posts</h1>
+      {/* <h1>Manage Posts</h1>
       <Button onClick={() => handleCreatePost()}>Create New Post</Button>
       <ul>
         {posts.map((post) => (
@@ -34,7 +34,7 @@ export default function PostsPage() {
             <Button onClick={() => handleDeletePost(post.id)}>Delete</Button>
           </li>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 }

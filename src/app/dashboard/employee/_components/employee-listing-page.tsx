@@ -10,6 +10,7 @@ import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import EmployeeTable from './employee-tables';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type TEmployeeListingPage = {};
 
 export default async function EmployeeListingPage({}: TEmployeeListingPage) {

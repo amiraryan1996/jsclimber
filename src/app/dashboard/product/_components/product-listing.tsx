@@ -4,6 +4,7 @@ import { searchParamsCache } from '@/lib/searchparams';
 import { DataTable as ProductTable } from '@/components/ui/table/data-table';
 import { columns } from './product-tables/columns';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type ProductListingPage = {};
 
 export default async function ProductListingPage({}: ProductListingPage) {

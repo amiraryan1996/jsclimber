@@ -35,12 +35,14 @@ interface FilterBoxProps {
   options: FilterOption[];
   setFilterValue: (
     value: string | ((old: string) => string | null) | null,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     options?: Options<any> | undefined
   ) => Promise<URLSearchParams>;
   filterValue: string;
 }
 
 export function DataTableFilterBox({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   filterKey,
   title,
   options,
