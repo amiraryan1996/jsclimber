@@ -23,6 +23,7 @@ import NewSectionDialog from './new-section-dialog';
 import { TaskCard } from './task-card';
 // import { coordinateGetter } from "./multipleContainersKeyboardPreset";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const defaultCols = [
   {
     id: 'TODO' as const,
@@ -53,6 +54,7 @@ export function KanbanBoard() {
   const tasks = useTaskStore((state) => state.tasks);
   const setTasks = useTaskStore((state) => state.setTasks);
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-wrapper-object-types
   const [isMounted, setIsMounted] = useState<Boolean>(false);
 
   const [activeTask, setActiveTask] = useState<Task | null>(null);

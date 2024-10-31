@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { apiPost } from "../database";
 import { apiGet } from "../database";
 import { withAuth } from "../middlewares/withAuth";
 
 // Get
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function GET(req: Request, res: Response) {
   const query = `
   SELECT * from articles

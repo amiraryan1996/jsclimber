@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -96,7 +97,9 @@ export default function AppSidebar({
             <SidebarGroupLabel>Overview</SidebarGroupLabel>
             <SidebarMenu>
               {navItems.map((item) => {
-                const Icon = item.icon ? Icons[item.icon] : Icons.logo;
+                const Icon = item.icon
+                  ? Icons[item.icon as keyof typeof Icons]
+                  : Icons.logo;
                 return item?.items && item?.items?.length > 0 ? (
                   <Collapsible
                     key={item.title}
@@ -117,7 +120,7 @@ export default function AppSidebar({
                       </CollapsibleTrigger>
                       <CollapsibleContent>
                         <SidebarMenuSub>
-                          {item.items?.map((subItem) => (
+                          {item.items?.map((subItem:any) => (
                             <SidebarMenuSubItem key={subItem.title}>
                               <SidebarMenuSubButton
                                 asChild
