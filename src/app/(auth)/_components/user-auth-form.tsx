@@ -55,28 +55,7 @@ export default function UserAuthForm() {
       });
     });
   };
-  //   try {
-  //     const response = await fetch("/api/auth/login", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(data),
-  //     });
 
-  //     if (response.ok) {
-  //       const { token } = await response.json();
-  //       setToken(token);
-  //       setIsAuthenticated(true);
-  //       toast.success("Signed In Successfully!");
-  //       router.push(callbackUrl ?? "/dashboard");
-  //     } else {
-  //       const errorData = await response.json();
-  //       toast.error(`Login failed: ${errorData.message}`);
-  //     }
-  //   } catch (error) {
-  //     console.error("Login error:", error);
-  //     toast.error("An unexpected error occurred during login.");
-  //   }
-  // };
   return (
     <>
       <Form {...form}>
