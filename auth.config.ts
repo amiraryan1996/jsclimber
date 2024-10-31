@@ -1,43 +1,60 @@
 import { NextAuthConfig } from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
-// ! https://authjs.dev/getting-started/migrating-to-v5
-const authConfig = {
+
+const authConfig: NextAuthConfig = {
   providers: [
+    // https://next-auth.js.org/providers/github#configuration
     GithubProvider({
       clientId: process.env.GITHUB_ID ?? "",
       clientSecret: process.env.GITHUB_SECRET ?? "",
     }),
     CredentialProvider({
       credentials: {
-        email: {
-          type: "email",
-        },
-        password: {
-          type: "password",
-        },
+        emailId: { type: "email" },
+        password: { type: "password" },
       },
+      //  credentials input fields will be rendered on the default sign in page
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       async authorize(credentials, req) {
-        const user = {
-          id: "1",
-          name: "John",
-          email: credentials?.email as string,
-        };
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
-          return user;
-        } else {
-          // If you return null then an error will be displayed advising the user to check their details.
-          return null;
+        console.log("Authorizing user with credentials:", credentials);
 
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+        if (!credentials) return null;
+
+        try {
+          const res = await fetch(
+            "http://localhost:3000/api/auth/verify-credentials",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                emailId: credentials.emailId,
+                password: credentials.password,
+              }),
+            }
+          );
+
+          if (!res.ok) {
+            const errorData = await res.json();
+            console.error("Authorization error:", errorData);
+            throw new Error(errorData.message || "Authorization failed");
+          }
+
+          const user = await res.json();
+          console.log("User found:", user);
+          return user
+            ? { id: user.id, name: user.name, email: user.emailId }
+            : null;
+        } catch (error) {
+          console.error("Authorization request error:", error);
+          return null;
         }
       },
     }),
   ],
   pages: {
-    signIn: "/", //sigin page
+    signIn: "/",
   },
-} satisfies NextAuthConfig;
+};
 
 export default authConfig;

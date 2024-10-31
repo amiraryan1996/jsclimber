@@ -31,6 +31,7 @@ export function ColumnActions({
   title: string;
   id: UniqueIdentifier;
 }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [open, setIsOpen] = React.useState(false);
   const [name, setName] = React.useState(title);
   const updateCol = useTaskStore((state) => state.updateCol);
@@ -69,6 +70,7 @@ export function ColumnActions({
             onSelect={() => {
               setIsEditDisable(!editDisable);
               setTimeout(() => {
+                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                 inputRef.current && inputRef.current?.focus();
               }, 500);
             }}

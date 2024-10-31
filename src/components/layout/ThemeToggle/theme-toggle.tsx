@@ -10,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type CompProps = {};
 export default function ThemeToggle({}: CompProps) {
   // ! https://www.npmjs.com/package/next-themes

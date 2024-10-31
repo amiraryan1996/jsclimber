@@ -1,6 +1,6 @@
 // /api/auth/login
 
-import { getUserByEmailId } from "../../users/route";
+import { getUserByEmailId } from "../../users/getUserByEmailId";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
