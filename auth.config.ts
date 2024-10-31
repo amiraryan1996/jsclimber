@@ -55,6 +55,11 @@ const authConfig: NextAuthConfig = {
   pages: {
     signIn: "/",
   },
+  secret: process.env.AUTH_SECRET,
+
+  // TODO: *Spoofing Attacks* add jsclimber.com domain in production trusted only!
+  // ! https://authjs.dev/reference/core/errors#untrustedhost
+  // trustHost: true,
 };
 
 export default authConfig;
