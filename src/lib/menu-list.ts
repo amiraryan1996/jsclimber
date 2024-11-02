@@ -1,12 +1,4 @@
-import {
-  Tag,
-  Users,
-  Settings,
-  Bookmark,
-  SquarePen,
-  LayoutGrid,
-  LucideIcon
-} from 'lucide-react';
+import { Tag, Users, Settings, Bookmark, SquarePen, LayoutGrid, LucideIcon } from 'lucide-react';
 
 type Submenu = {
   href: string;
@@ -37,9 +29,9 @@ export function getMenuList(pathname: string): Group[] {
           label: 'Dashboard',
           active: pathname.includes('/dashboard'),
           icon: LayoutGrid,
-          submenus: []
-        }
-      ]
+          submenus: [],
+        },
+      ],
     },
     {
       groupLabel: 'Contents',
@@ -52,27 +44,27 @@ export function getMenuList(pathname: string): Group[] {
           submenus: [
             {
               href: '/posts',
-              label: 'All Posts'
+              label: 'All Posts',
             },
             {
               href: '/posts/new',
-              label: 'New Post'
-            }
-          ]
+              label: 'New Post',
+            },
+          ],
         },
         {
           href: '/categories',
           label: 'Categories',
           active: pathname.includes('/categories'),
-          icon: Bookmark
+          icon: Bookmark,
         },
         {
           href: '/tags',
           label: 'Tags',
           active: pathname.includes('/tags'),
-          icon: Tag
-        }
-      ]
+          icon: Tag,
+        },
+      ],
     },
     {
       groupLabel: 'Settings',
@@ -81,15 +73,15 @@ export function getMenuList(pathname: string): Group[] {
           href: '/users',
           label: 'Users',
           active: pathname.includes('/users'),
-          icon: Users
+          icon: Users,
         },
         {
           href: '/account',
           label: 'Account',
           active: pathname.includes('/account'),
-          icon: Settings
-        }
-      ]
-    }
+          icon: Settings,
+        },
+      ],
+    },
   ];
 }

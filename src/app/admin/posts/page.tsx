@@ -1,6 +1,6 @@
 // src/app/admin/posts/page.tsx
-"use client";
-import { useState, useEffect } from "react";
+'use client';
+import { useState, useEffect } from 'react';
 
 export default function PostsPage() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -12,11 +12,11 @@ export default function PostsPage() {
 
   async function fetchPosts() {
     try {
-      const response = await fetch("/api/posts");
+      const response = await fetch('/api/posts');
       const data = await response.json();
       setPosts(data);
     } catch (error) {
-      console.error("Error fetching posts:", error);
+      console.error('Error fetching posts:', error);
     }
   }
 

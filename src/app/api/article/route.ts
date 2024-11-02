@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { apiPost } from "../database";
-import { apiGet } from "../database";
-import { withAuth } from "../middlewares/withAuth";
+import { apiPost } from '../database';
+import { apiGet } from '../database';
+import { withAuth } from '../middlewares/withAuth';
 
 // Get
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -31,7 +31,7 @@ export async function GET(req: Request, res: Response) {
       { error: error },
       {
         status: 400,
-      }
+      },
     );
   }
 }
@@ -53,7 +53,7 @@ export async function POST(req: Request, res: Response) {
     await apiPost(query, values)
       .then(() => {
         status = 200;
-        respBody = { message: "Successfully created article" };
+        respBody = { message: 'Successfully created article' };
       })
       .catch((err) => {
         status = 400;

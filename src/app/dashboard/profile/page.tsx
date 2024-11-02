@@ -6,7 +6,7 @@ type pageProps = {
 };
 
 export const metadata = {
-  title: 'Dashboard : Profile'
+  title: 'Dashboard : Profile',
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

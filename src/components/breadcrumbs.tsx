@@ -5,7 +5,7 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator
+  BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { useBreadcrumbs } from '@/hooks/use-breadcrumbs';
 import { Slash } from 'lucide-react';
@@ -30,9 +30,7 @@ export function Breadcrumbs() {
                 <Slash />
               </BreadcrumbSeparator>
             )}
-            {index === items.length - 1 && (
-              <BreadcrumbPage>{item.title}</BreadcrumbPage>
-            )}
+            {index === items.length - 1 && <BreadcrumbPage>{item.title}</BreadcrumbPage>}
           </Fragment>
         ))}
       </BreadcrumbList>

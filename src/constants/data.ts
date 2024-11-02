@@ -1,4 +1,4 @@
-import { NavItem } from "../types";
+import { NavItem } from '../types';
 
 export type User = {
   id: number;
@@ -15,7 +15,7 @@ export const users: User[] = [
     company: 'Dell',
     role: 'Frontend Developer',
     verified: false,
-    status: 'Active'
+    status: 'Active',
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ export const users: User[] = [
     company: 'TechCorp',
     role: 'Backend Developer',
     verified: true,
-    status: 'Active'
+    status: 'Active',
   },
   {
     id: 3,
@@ -31,7 +31,7 @@ export const users: User[] = [
     company: 'WebTech',
     role: 'UI Designer',
     verified: true,
-    status: 'Active'
+    status: 'Active',
   },
   {
     id: 4,
@@ -39,7 +39,7 @@ export const users: User[] = [
     company: 'Innovate Inc.',
     role: 'Fullstack Developer',
     verified: false,
-    status: 'Inactive'
+    status: 'Inactive',
   },
   {
     id: 5,
@@ -47,7 +47,7 @@ export const users: User[] = [
     company: 'TechGuru',
     role: 'Product Manager',
     verified: true,
-    status: 'Active'
+    status: 'Active',
   },
   {
     id: 6,
@@ -55,7 +55,7 @@ export const users: User[] = [
     company: 'CodeGenius',
     role: 'QA Engineer',
     verified: false,
-    status: 'Active'
+    status: 'Active',
   },
   {
     id: 7,
@@ -63,7 +63,7 @@ export const users: User[] = [
     company: 'SoftWorks',
     role: 'UX Designer',
     verified: true,
-    status: 'Active'
+    status: 'Active',
   },
   {
     id: 8,
@@ -71,7 +71,7 @@ export const users: User[] = [
     company: 'DevCraft',
     role: 'DevOps Engineer',
     verified: false,
-    status: 'Active'
+    status: 'Active',
   },
   {
     id: 9,
@@ -79,7 +79,7 @@ export const users: User[] = [
     company: 'WebSolutions',
     role: 'Frontend Developer',
     verified: true,
-    status: 'Active'
+    status: 'Active',
   },
   {
     id: 10,
@@ -87,8 +87,8 @@ export const users: User[] = [
     company: 'DataTech',
     role: 'Data Analyst',
     verified: false,
-    status: 'Active'
-  }
+    status: 'Active',
+  },
 ];
 
 export type Employee = {
@@ -127,21 +127,21 @@ export const navItems: NavItem[] = [
     url: '/dashboard/overview',
     icon: 'dashboard',
     isActive: false,
-    items: [] // Empty array as there are no child items for Dashboard
+    items: [], // Empty array as there are no child items for Dashboard
   },
   {
     title: 'Employee',
     url: '/dashboard/employee',
     icon: 'user',
     isActive: false,
-    items: [] // No child items
+    items: [], // No child items
   },
   {
     title: 'Product',
     url: '/dashboard/product',
     icon: 'product',
     isActive: false,
-    items: [] // No child items
+    items: [], // No child items
   },
   {
     title: 'Account',
@@ -153,20 +153,20 @@ export const navItems: NavItem[] = [
       {
         title: 'Profile',
         url: '/dashboard/profile',
-        icon: 'userPen'
+        icon: 'userPen',
       },
       {
         title: 'Login',
         url: '/',
-        icon: 'login'
-      }
-    ]
+        icon: 'login',
+      },
+    ],
   },
   {
     title: 'Kanban',
     url: '/dashboard/kanban',
     icon: 'kanban',
     isActive: false,
-    items: [] // No child items
-  }
+    items: [], // No child items
+  },
 ];

@@ -5,7 +5,7 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow
+  TableRow,
 } from '@/components/ui/table';
 import { ScrollArea, ScrollBar } from '../scroll-area';
 
@@ -14,7 +14,7 @@ export function DataTableSkeleton({
   rowCount = 10,
   searchableColumnCount = 0,
   filterableColumnCount = 0,
-  showViewOptions = false
+  showViewOptions = false,
 }) {
   return (
     <div className="w-full space-y-3 overflow-auto">
@@ -32,13 +32,11 @@ export function DataTableSkeleton({
                 ))
               : null}
           </div>
-          {showViewOptions ? (
-            <Skeleton className="ml-auto hidden h-7 w-[70px] lg:flex" />
-          ) : null}
+          {showViewOptions ? <Skeleton className="ml-auto hidden h-7 w-[70px] lg:flex" /> : null}
         </div>
       ) : null}
       <div className="rounded-md border">
-        <ScrollArea className="h-[calc(80vh-220px)] rounded-md border  md:h-[calc(90dvh-220px)]">
+        <ScrollArea className="h-[calc(80vh-220px)] rounded-md border md:h-[calc(90dvh-220px)]">
           <Table>
             <TableHeader>
               {Array.from({ length: 1 }).map((_, i) => (

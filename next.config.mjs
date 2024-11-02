@@ -40,6 +40,11 @@ const nextConfig = {
         hostname: "api.slingacademy.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "dummyimage.com",
+        port: "",
+      },
     ],
   },
   transpilePackages: ["geist"],

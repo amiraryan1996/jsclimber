@@ -1,5 +1,5 @@
-import { apiGet, apiPost } from "../database";
-import { NextResponse } from "next/server";
+import { apiGet, apiPost } from '../database';
+import { NextResponse } from 'next/server';
 
 // Get all categories
 export async function GET() {
@@ -9,11 +9,8 @@ export async function GET() {
     const categories = await apiGet(query);
     return NextResponse.json(categories, { status: 200 });
   } catch (error) {
-    console.error("Error fetching categories:", error);
-    return NextResponse.json(
-      { message: "Error fetching categories" },
-      { status: 400 }
-    );
+    console.error('Error fetching categories:', error);
+    return NextResponse.json({ message: 'Error fetching categories' }, { status: 400 });
   }
 }
 
@@ -24,15 +21,9 @@ export async function POST(req: Request) {
 
   try {
     await apiPost(query, [name]);
-    return NextResponse.json(
-      { message: "Category created successfully" },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: 'Category created successfully' }, { status: 200 });
   } catch (error) {
-    console.error("Error creating category:", error);
-    return NextResponse.json(
-      { message: "Error creating category" },
-      { status: 400 }
-    );
+    console.error('Error creating category:', error);
+    return NextResponse.json({ message: 'Error creating category' }, { status: 400 });
   }
 }

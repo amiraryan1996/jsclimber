@@ -11,7 +11,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function hasDraggableData<T extends Active | Over>(
-  entry: T | null | undefined
+  entry: T | null | undefined,
 ): entry is T & {
   data: DataRef<DraggableData>;
 } {
@@ -33,7 +33,7 @@ export function formatBytes(
   opts: {
     decimals?: number;
     sizeType?: 'accurate' | 'normal';
-  } = {}
+  } = {},
 ) {
   const { decimals = 0, sizeType = 'normal' } = opts;
 
@@ -42,6 +42,35 @@ export function formatBytes(
   if (bytes === 0) return '0 Byte';
   const i = Math.floor(Math.log(bytes) / Math.log(1024));
   return `${(bytes / Math.pow(1024, i)).toFixed(decimals)} ${
-    sizeType === 'accurate' ? accurateSizes[i] ?? 'Bytest' : sizes[i] ?? 'Bytes'
+    sizeType === 'accurate' ? (accurateSizes[i] ?? 'Bytest') : (sizes[i] ?? 'Bytes')
   }`;
+}
+
+export async function checkUserExistence(email: string) {
+  const res = await fetch('/api/auth/check-user', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ emailId: email }),
+  });
+  const data = await res.json();
+  return data.userExists;
+}
+
+export function calculateStrength(value: string) {
+  let score = 0;
+  // scoring based on passwordSchema
+  const rules = [
+    { regex: /^.{8,20}$/, weight: 20 }, // Length between 8 and 20
+    { regex: /[A-Z]/, weight: 20 }, // At least one uppercase letter
+    { regex: /[a-z]/, weight: 20 }, // At least one lowercase letter
+    { regex: /\d/, weight: 20 }, // At least one digit
+    { regex: /[$&+,:;=?@#|'<>.^*()%!-]/, weight: 20 }, // At least one special character
+  ];
+  rules.forEach((rule) => {
+    if (rule.regex.test(value)) {
+      score += rule.weight;
+    }
+  });
+
+  return score;
 }

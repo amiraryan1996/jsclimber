@@ -1,10 +1,10 @@
-"use client";
-import { redirect } from "next/navigation";
-import { useAppStore } from "@/app/store";
+'use client';
+import { redirect } from 'next/navigation';
+import { useAppStore } from '@/app/store';
 
 export default function AdminHome() {
   const isAuthenticated = useAppStore((state) => state.isAuthenticated);
-  if (!isAuthenticated) redirect("/admin/login");
+  if (!isAuthenticated) redirect('/admin/login');
 
   return (
     <div>

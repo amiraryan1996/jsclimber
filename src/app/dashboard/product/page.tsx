@@ -13,7 +13,7 @@ import ProductListingPage from './_components/product-listing';
 import ProductTableAction from './_components/product-tables/product-table-action';
 
 export const metadata = {
-  title: 'Dashboard: Products'
+  title: 'Dashboard: Products',
 };
 
 type pageProps = {
@@ -44,10 +44,7 @@ export default async function Page({ searchParams }: pageProps) {
         </div>
         <Separator />
         <ProductTableAction />
-        <Suspense
-          key={key}
-          fallback={<DataTableSkeleton columnCount={5} rowCount={10} />}
-        >
+        <Suspense key={key} fallback={<DataTableSkeleton columnCount={5} rowCount={10} />}>
           <ProductListingPage />
         </Suspense>
       </div>

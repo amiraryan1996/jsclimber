@@ -1,6 +1,6 @@
-import Link from "next/link";
-import SignupForm from "./components";
-import SignupSvg from "../../assets/svg/Sign up-amico.svg";
+import Link from 'next/link';
+import SignupForm from './components';
+import SignupSvg from '../../assets/svg/Sign up-amico.svg';
 
 // ?UI Template: https://github.com/shadcn-ui/ui/blob/500a353816969e3cce2b3f4f0699ce4e6ad06f0b/apps/www/registry/default/block/authentication-04.tsx#L19
 
@@ -17,14 +17,14 @@ export default function Signup() {
           </div>
           <SignupForm />
           <div className="mt-4 text-center text-sm">
-            Alreay have an account?{" "}
+            Alreay have an account?{' '}
             <Link href="/admin/login" className="underline">
               Login
             </Link>
           </div>
         </div>
       </div>
-      <div className="hidden bg-muted lg:flex items-center">
+      <div className="hidden items-center bg-muted lg:flex">
         <SignupSvg />
       </div>
     </div>

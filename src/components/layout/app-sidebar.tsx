@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+'use client';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,8 +10,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Separator } from "@/components/ui/separator";
+} from '@/components/ui/dropdown-menu';
+import { Separator } from '@/components/ui/separator';
 import {
   Sidebar,
   SidebarContent,
@@ -33,8 +29,8 @@ import {
   SidebarProvider,
   SidebarRail,
   SidebarTrigger,
-} from "@/components/ui/sidebar";
-import { navItems } from "@/constants/data";
+} from '@/components/ui/sidebar';
+import { navItems } from '@/constants/data';
 import {
   BadgeCheck,
   Bell,
@@ -43,28 +39,24 @@ import {
   CreditCard,
   GalleryVerticalEnd,
   LogOut,
-} from "lucide-react";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import * as React from "react";
-import { Breadcrumbs } from "../breadcrumbs";
-import { Icons } from "../icons";
-import SearchInput from "../search-input";
-import ThemeToggle from "./ThemeToggle/theme-toggle";
-import { UserNav } from "./user-nav";
+} from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import * as React from 'react';
+import { Breadcrumbs } from '../breadcrumbs';
+import { Icons } from '../icons';
+import SearchInput from '../search-input';
+import ThemeToggle from './ThemeToggle/theme-toggle';
+import { UserNav } from './user-nav';
 
 export const company = {
-  name: "Acme Inc",
+  name: 'Acme Inc',
   logo: GalleryVerticalEnd,
-  plan: "Enterprise",
+  plan: 'Enterprise',
 };
 
-export default function AppSidebar({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AppSidebar({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = React.useState(false);
   // ! https://next-auth.js.org/getting-started/example
   const { data: session } = useSession();
@@ -82,7 +74,7 @@ export default function AppSidebar({
     <SidebarProvider>
       <Sidebar collapsible="icon">
         <SidebarHeader>
-          <div className="flex gap-2 py-2 text-sidebar-accent-foreground ">
+          <div className="flex gap-2 py-2 text-sidebar-accent-foreground">
             <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
               <company.logo className="size-4" />
             </div>
@@ -97,9 +89,7 @@ export default function AppSidebar({
             <SidebarGroupLabel>Overview</SidebarGroupLabel>
             <SidebarMenu>
               {navItems.map((item) => {
-                const Icon = item.icon
-                  ? Icons[item.icon as keyof typeof Icons]
-                  : Icons.logo;
+                const Icon = item.icon ? Icons[item.icon as keyof typeof Icons] : Icons.logo;
                 return item?.items && item?.items?.length > 0 ? (
                   <Collapsible
                     key={item.title}
@@ -109,10 +99,7 @@ export default function AppSidebar({
                   >
                     <SidebarMenuItem>
                       <CollapsibleTrigger asChild>
-                        <SidebarMenuButton
-                          tooltip={item.title}
-                          isActive={pathname === item.url}
-                        >
+                        <SidebarMenuButton tooltip={item.title} isActive={pathname === item.url}>
                           {item.icon && <Icon />}
                           <span>{item.title}</span>
                           <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
@@ -120,12 +107,9 @@ export default function AppSidebar({
                       </CollapsibleTrigger>
                       <CollapsibleContent>
                         <SidebarMenuSub>
-                          {item.items?.map((subItem:any) => (
+                          {item.items?.map((subItem: any) => (
                             <SidebarMenuSubItem key={subItem.title}>
-                              <SidebarMenuSubButton
-                                asChild
-                                isActive={pathname === subItem.url}
-                              >
+                              <SidebarMenuSubButton asChild isActive={pathname === subItem.url}>
                                 <Link href={subItem.url}>
                                   <span>{subItem.title}</span>
                                 </Link>
@@ -165,21 +149,16 @@ export default function AppSidebar({
                   >
                     <Avatar className="h-8 w-8 rounded-lg">
                       <AvatarImage
-                        src={session?.user?.image || ""}
-                        alt={session?.user?.name || ""}
+                        src={session?.user?.image || ''}
+                        alt={session?.user?.name || ''}
                       />
                       <AvatarFallback className="rounded-lg">
-                        {session?.user?.name?.slice(0, 2)?.toUpperCase() ||
-                          "CN"}
+                        {session?.user?.name?.slice(0, 2)?.toUpperCase() || 'CN'}
                       </AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold">
-                        {session?.user?.name || ""}
-                      </span>
-                      <span className="truncate text-xs">
-                        {session?.user?.email || ""}
-                      </span>
+                      <span className="truncate font-semibold">{session?.user?.name || ''}</span>
+                      <span className="truncate text-xs">{session?.user?.email || ''}</span>
                     </div>
                     <ChevronsUpDown className="ml-auto size-4" />
                   </SidebarMenuButton>
@@ -194,22 +173,16 @@ export default function AppSidebar({
                     <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                       <Avatar className="h-8 w-8 rounded-lg">
                         <AvatarImage
-                          src={session?.user?.image || ""}
-                          alt={session?.user?.name || ""}
+                          src={session?.user?.image || ''}
+                          alt={session?.user?.name || ''}
                         />
                         <AvatarFallback className="rounded-lg">
-                          {session?.user?.name?.slice(0, 2)?.toUpperCase() ||
-                            "CN"}
+                          {session?.user?.name?.slice(0, 2)?.toUpperCase() || 'CN'}
                         </AvatarFallback>
                       </Avatar>
                       <div className="grid flex-1 text-left text-sm leading-tight">
-                        <span className="truncate font-semibold">
-                          {session?.user?.name || ""}
-                        </span>
-                        <span className="truncate text-xs">
-                          {" "}
-                          {session?.user?.email || ""}
-                        </span>
+                        <span className="truncate font-semibold">{session?.user?.name || ''}</span>
+                        <span className="truncate text-xs"> {session?.user?.email || ''}</span>
                       </div>
                     </div>
                   </DropdownMenuLabel>
@@ -248,7 +221,7 @@ export default function AppSidebar({
             <Separator orientation="vertical" className="mr-2 h-4" />
             <Breadcrumbs />
           </div>
-          <div className=" hidden w-1/3 items-center gap-2 px-4 md:flex ">
+          <div className="hidden w-1/3 items-center gap-2 px-4 md:flex">
             <SearchInput />
           </div>
           <div className="flex items-center gap-2 px-4">

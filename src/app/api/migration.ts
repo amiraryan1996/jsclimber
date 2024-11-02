@@ -1,6 +1,6 @@
 // http://localhost:3000/api/migrate
 
-import { db } from "./database";
+import { db } from './database';
 export const migrate = () => {
   // (method) Database.serialize(callback?: () => void): void
   db.serialize(() => {
@@ -22,11 +22,11 @@ export const migrate = () => {
     `,
       (err: Error) => {
         if (err) {
-          console.error("Error creating Posts table:", err.message);
+          console.error('Error creating Posts table:', err.message);
         } else {
-          console.log("Posts table created successfully.");
+          console.log('Posts table created successfully.');
         }
-      }
+      },
     );
 
     // categories table
@@ -39,11 +39,11 @@ export const migrate = () => {
     `,
       (err: Error) => {
         if (err) {
-          console.error("Error creating categories table:", err.message);
+          console.error('Error creating categories table:', err.message);
         } else {
-          console.log("Categories table created successfully.");
+          console.log('Categories table created successfully.');
         }
-      }
+      },
     );
 
     db.run(
@@ -58,11 +58,11 @@ export const migrate = () => {
     `,
       (err: Error) => {
         if (err) {
-          console.error("Error creating users table:", err.message);
+          console.error('Error creating users table:', err.message);
         } else {
-          console.log("Users table created successfully.");
+          console.log('Users table created successfully.');
         }
-      }
+      },
     );
   });
 };

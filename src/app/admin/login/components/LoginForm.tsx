@@ -1,9 +1,9 @@
-"use client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { useToast } from "@/hooks/use-toast";
-import { Button } from "@/components/ui/button";
+'use client';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { useToast } from '@/hooks/use-toast';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -11,19 +11,19 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
-import { useAppStore, useTokenStore } from "../../../store";
-import Link from "next/link";
-import { Github } from "lucide-react";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { useRouter } from 'next/navigation';
+import { useAppStore, useTokenStore } from '../../../store';
+import Link from 'next/link';
+import { Github } from 'lucide-react';
 
 const FormSchema = z.object({
   emailId: z.string().email().min(5, {
-    message: "Email must be at least 5 characters and valid email format.",
+    message: 'Email must be at least 5 characters and valid email format.',
   }),
   password: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
+    message: 'Password must be at least 8 characters.',
   }),
 });
 
@@ -31,8 +31,8 @@ export default function LoginForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      emailId: "",
-      password: "",
+      emailId: '',
+      password: '',
     },
   });
   const { toast } = useToast();
@@ -42,9 +42,9 @@ export default function LoginForm() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       // ! Next Fn's, fetch:  https://nextjs.org/docs/app/api-reference/functions/fetch
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
       // true: (status in the range 200-299)
@@ -53,15 +53,15 @@ export default function LoginForm() {
         setToken(token);
         setIsAuthenticated(true);
         toast({
-          title: "Login result:",
-          description: "Logged in successfully ",
+          title: 'Login result:',
+          description: 'Logged in successfully ',
         });
-        router.push("/admin");
+        router.push('/admin');
       } else {
         const data = await response.json();
         toast({
-          variant: "destructive",
-          title: "Login result:",
+          variant: 'destructive',
+          title: 'Login result:',
           description: data.message,
         });
       }
@@ -82,9 +82,7 @@ export default function LoginForm() {
               <FormControl>
                 <Input placeholder="johnsmith@gmail.com" {...field} />
               </FormControl>
-              <FormDescription>
-                {/* This is your public display name. */}
-              </FormDescription>
+              <FormDescription>{/* This is your public display name. */}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -107,13 +105,11 @@ export default function LoginForm() {
                 <FormControl>
                   <Input placeholder="password..." {...field} />
                 </FormControl>
-                <FormDescription>
-                  {/* This is your public display name. */}
-                </FormDescription>
+                <FormDescription>{/* This is your public display name. */}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
-          />{" "}
+          />{' '}
         </div>
 
         <Button type="submit" className="w-full">

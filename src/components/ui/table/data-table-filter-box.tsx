@@ -9,13 +9,9 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator
+  CommandSeparator,
 } from '@/components/ui/command';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger
-} from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import { PlusCircledIcon } from '@radix-ui/react-icons';
@@ -36,7 +32,7 @@ interface FilterBoxProps {
   setFilterValue: (
     value: string | ((old: string) => string | null) | null,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    options?: Options<any> | undefined
+    options?: Options<any> | undefined,
   ) => Promise<URLSearchParams>;
   filterValue: string;
 }
@@ -47,7 +43,7 @@ export function DataTableFilterBox({
   title,
   options,
   setFilterValue,
-  filterValue
+  filterValue,
 }: FilterBoxProps) {
   const selectedValuesSet = React.useMemo(() => {
     if (!filterValue) return new Set<string>();
@@ -76,29 +72,18 @@ export function DataTableFilterBox({
           {selectedValuesSet.size > 0 && (
             <>
               <Separator orientation="vertical" className="mx-2 h-4" />
-              <Badge
-                variant="secondary"
-                className="rounded-sm px-1 font-normal lg:hidden"
-              >
+              <Badge variant="secondary" className="rounded-sm px-1 font-normal lg:hidden">
                 {selectedValuesSet.size}
               </Badge>
               <div className="hidden space-x-1 lg:flex">
                 {selectedValuesSet.size > 2 ? (
-                  <Badge
-                    variant="secondary"
-                    className="rounded-sm px-1 font-normal"
-                  >
+                  <Badge variant="secondary" className="rounded-sm px-1 font-normal">
                     {selectedValuesSet.size} selected
                   </Badge>
                 ) : (
                   Array.from(selectedValuesSet).map((value) => (
-                    <Badge
-                      variant="secondary"
-                      key={value}
-                      className="rounded-sm px-1 font-normal"
-                    >
-                      {options.find((option) => option.value === value)
-                        ?.label || value}
+                    <Badge variant="secondary" key={value} className="rounded-sm px-1 font-normal">
+                      {options.find((option) => option.value === value)?.label || value}
                     </Badge>
                   ))
                 )}
@@ -114,16 +99,13 @@ export function DataTableFilterBox({
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
               {options.map((option) => (
-                <CommandItem
-                  key={option.value}
-                  onSelect={() => handleSelect(option.value)}
-                >
+                <CommandItem key={option.value} onSelect={() => handleSelect(option.value)}>
                   <div
                     className={cn(
                       'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
                       selectedValuesSet.has(option.value)
                         ? 'bg-primary text-primary-foreground'
-                        : 'opacity-50 [&_svg]:invisible'
+                        : 'opacity-50 [&_svg]:invisible',
                     )}
                   >
                     <CheckIcon className="h-4 w-4" aria-hidden="true" />
@@ -142,10 +124,7 @@ export function DataTableFilterBox({
               <>
                 <CommandSeparator />
                 <CommandGroup>
-                  <CommandItem
-                    onSelect={resetFilter}
-                    className="justify-center text-center"
-                  >
+                  <CommandItem onSelect={resetFilter} className="justify-center text-center">
                     Clear filters
                   </CommandItem>
                 </CommandGroup>

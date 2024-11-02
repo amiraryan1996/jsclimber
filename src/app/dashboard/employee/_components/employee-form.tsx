@@ -10,7 +10,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import {
@@ -18,27 +18,27 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 } from '@/components/ui/select';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
 const formSchema = z.object({
   name: z.string().min(2, {
-    message: 'Name must be at least 2 characters.'
+    message: 'Name must be at least 2 characters.',
   }),
   country: z.string({
-    required_error: 'Please select a country.'
+    required_error: 'Please select a country.',
   }),
   email: z.string().email({
-    message: 'Please enter a valid email address.'
+    message: 'Please enter a valid email address.',
   }),
   company: z.string().min(1, {
-    message: 'Company name is required.'
+    message: 'Company name is required.',
   }),
   gender: z.enum(['male', 'female', 'other'], {
-    required_error: 'Please select a gender.'
-  })
+    required_error: 'Please select a gender.',
+  }),
 });
 
 export default function EmployeeForm() {
@@ -49,8 +49,8 @@ export default function EmployeeForm() {
       country: '',
       email: '',
       company: '',
-      gender: undefined
-    }
+      gender: undefined,
+    },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -60,9 +60,7 @@ export default function EmployeeForm() {
   return (
     <Card className="mx-auto w-full">
       <CardHeader>
-        <CardTitle className="text-left text-2xl font-bold">
-          Employee Information
-        </CardTitle>
+        <CardTitle className="text-left text-2xl font-bold">Employee Information</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -115,11 +113,7 @@ export default function EmployeeForm() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="Enter your email"
-                        {...field}
-                      />
+                      <Input type="email" placeholder="Enter your email" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

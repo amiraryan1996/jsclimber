@@ -24,7 +24,7 @@ export default async function EmployeeListingPage({}: TEmployeeListingPage) {
     page,
     limit: pageLimit,
     ...(search && { search }),
-    ...(gender && { genders: gender })
+    ...(gender && { genders: gender }),
   };
 
   // mock api call

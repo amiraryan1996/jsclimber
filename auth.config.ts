@@ -4,7 +4,6 @@ import GithubProvider from "next-auth/providers/github";
 
 const authConfig: NextAuthConfig = {
   providers: [
-    // github: signIn('github', { callbackUrl: callbackUrl ?? '/dashboard' })
     // https://next-auth.js.org/providers/github#configuration
     GithubProvider({
       clientId: process.env.GITHUB_ID ?? "",
@@ -32,16 +31,17 @@ const authConfig: NextAuthConfig = {
             }),
           });
 
+          const data = await res.json();
           if (!res.ok) {
-            const errorData = await res.json();
-            console.error("Authorization error:", errorData);
-            throw new Error(errorData.message || "Authorization failed");
+            console.error("Authorization error:", data);
+            throw new Error(data.message);
           }
 
-          const user = await res.json();
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { user, status } = data;
           console.log("User found:", user);
           return user
-            ? { id: user.id, name: user.name, email: user.emailId }
+            ? { id: user.id, name: user.name, email: user.email }
             : null;
         } catch (error) {
           console.error("Authorization request error:", error);
@@ -56,6 +56,7 @@ const authConfig: NextAuthConfig = {
   secret: process.env.AUTH_SECRET,
 
   callbacks: {
+    // check gitHub user's email existance in database
     async signIn({ account, profile }) {
       console.log("Sign-in callback triggered with account:", account);
 
@@ -63,23 +64,22 @@ const authConfig: NextAuthConfig = {
         const baseUrl = process.env.AUTH_URL;
 
         try {
-          // Verify GitHub user's email exists in the database
           const res = await fetch(`${baseUrl}api/auth/check-user`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ emailId: profile?.email }),
           });
 
+          const data = await res.json();
           if (!res.ok) {
-            const errorData = await res.json();
-            console.error("check-user error:", errorData);
-            throw new Error(errorData.message || "check-user failed");
+            console.error("check-user error:", data);
+            throw new Error(data.message);
           }
 
-          const { userExists } = await res.json();
-          console.log("User exists in the database:", userExists);
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { userExists, status } = data;
+          console.log("User existence check result:", userExists);
 
-          // Redirect to signup page if user does not exist
           if (!userExists) {
             console.warn(
               "User not found in the database, redirecting to signup."

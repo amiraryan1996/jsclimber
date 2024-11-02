@@ -26,36 +26,29 @@ export interface TaskDragData {
 }
 
 export function TaskCard({ task, isOverlay }: TaskCardProps) {
-  const {
-    setNodeRef,
-    attributes,
-    listeners,
-    transform,
-    transition,
-    isDragging
-  } = useSortable({
+  const { setNodeRef, attributes, listeners, transform, transition, isDragging } = useSortable({
     id: task.id,
     data: {
       type: 'Task',
-      task
+      task,
     } satisfies TaskDragData,
     attributes: {
-      roleDescription: 'Task'
-    }
+      roleDescription: 'Task',
+    },
   });
 
   const style = {
     transition,
-    transform: CSS.Translate.toString(transform)
+    transform: CSS.Translate.toString(transform),
   };
 
   const variants = cva('', {
     variants: {
       dragging: {
         over: 'ring-2 opacity-30',
-        overlay: 'ring-2 ring-primary'
-      }
-    }
+        overlay: 'ring-2 ring-primary',
+      },
+    },
   });
 
   return (
@@ -63,7 +56,7 @@ export function TaskCard({ task, isOverlay }: TaskCardProps) {
       ref={setNodeRef}
       style={style}
       className={variants({
-        dragging: isOverlay ? 'overlay' : isDragging ? 'over' : undefined
+        dragging: isOverlay ? 'overlay' : isDragging ? 'over' : undefined,
       })}
     >
       <CardHeader className="space-between relative flex flex-row border-b-2 border-secondary px-3 py-3">
