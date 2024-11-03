@@ -1,6 +1,6 @@
 <?php
  // GitHub Webhook secret
-$secret = process.env.GITHUB_SECRET;
+$secret = "d44524b14c65c7fd9a016594625d8d63e3879bd3";
 
 // Get the payload
 $rawPost = file_get_contents('php://input');
