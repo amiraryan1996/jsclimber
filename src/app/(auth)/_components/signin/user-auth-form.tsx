@@ -8,13 +8,13 @@ import { useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import GithubSignInButton from './github-auth-button';
 import { debounce } from 'lodash';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
 import { PasswordField } from '@/components/ui/PasswordField';
-import { passwordSchema } from './passwordSchema';
+import { passwordSchema } from '../passwordSchema';
 import { checkUserExistence } from '@/lib/utils';
+import { GithubSignInButton } from './github-auth-button';
 
 const formSchema = z.object({
   emailId: z.string().email({ message: 'Enter a valid email address' }),
@@ -22,7 +22,7 @@ const formSchema = z.object({
 });
 type UserFormValue = z.infer<typeof formSchema>;
 
-export default function UserAuthForm() {
+export function UserAuthForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl');
   const [loading, startTransition] = useTransition();

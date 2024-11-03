@@ -1,14 +1,8 @@
-import { Metadata } from 'next';
 import Link from 'next/link';
-import UserAuthForm from './user-auth-form';
 import Image from 'next/image';
+import { UserAuthForm } from './user-auth-form';
 
-export const metadata: Metadata = {
-  title: 'Authentication',
-  description: 'Authentication forms built using the components.',
-};
-
-export default function SignInViewPage() {
+export function SignInViewPage() {
   return (
     <div className="relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="relative hidden h-full flex-col bg-muted p-10 dark:border-r lg:flex">
@@ -30,8 +24,8 @@ export default function SignInViewPage() {
           Logo
         </div>
         <Image
-          src="https://dummyimage.com/600x800/800080/fff.png&text=Login+page"
-          alt="login"
+          src="https://dummyimage.com/600x800/800080/fff.png&text=Sign in+page"
+          alt="Sign in"
           width={400}
           height={800}
           className="m-auto"
@@ -46,35 +40,18 @@ export default function SignInViewPage() {
       <div className="flex h-full items-center p-4 lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col space-y-2 text-center">
-            <h1 className="text-2xl font-semibold tracking-tight">Login</h1>
+            <h1 className="text-3xl font-semibold tracking-tight">Sign in</h1>
             <p className="text-balance text-muted-foreground">
-              Enter your email below to login your account
+              Enter your email below to Sign in your account
             </p>
           </div>
           <UserAuthForm />
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{' '}
-            <Link href="/admin/signup" className="underline">
+            <Link href="/signup" className="underline">
               Sign up
             </Link>
           </div>
-          {/* <p className="px-8 text-center text-sm text-muted-foreground">
-            By clicking continue, you agree to our{" "}
-            <Link
-              href="/terms"
-              className="underline underline-offset-4 hover:text-primary"
-            >
-              Terms of Service
-            </Link>{" "}
-            and{" "}
-            <Link
-              href="/privacy"
-              className="underline underline-offset-4 hover:text-primary"
-            >
-              Privacy Policy
-            </Link>
-            .
-          </p> */}
         </div>
       </div>
     </div>

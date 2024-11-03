@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icons';
 import { useToast } from '@/hooks/use-toast';
 
-export default function GithubSignInButton() {
+export function GithubSignInButton() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl');
   const { toast } = useToast();
@@ -26,7 +26,7 @@ export default function GithubSignInButton() {
           description: response.error,
         });
         console.error('GitHub sign-in error:', response.error);
-      } else if (response?.url === '/admin/signup') {
+      } else if (response?.url === '/signup') {
         toast({
           title: 'Redirecting to Signup',
           description: 'User not registered yet. Redirecting...',
