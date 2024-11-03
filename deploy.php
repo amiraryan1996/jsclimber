@@ -15,5 +15,5 @@ if ($hash !== hash_hmac($algo, $rawPost, $secret)) {
 }
 
 // Deploy the app
-shell_exec('cd /home/jsclimbe/jsclimber && git pull origin main && npm install && npm run build');
+shell_exec('cd /home/jsclimbe/jsclimber && git pull origin main && npm install && npm run build && pm2 restart server.js');
 ?>
