@@ -1,6 +1,7 @@
 // app/api/webhooks/github/route.js
 import { exec } from 'child_process';
 import crypto from 'crypto';
+console.log('Application started at', new Date().toISOString());
 
 // GitHub Webhook Handler
 export async function POST(req: Request) {
