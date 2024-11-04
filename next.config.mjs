@@ -1,5 +1,22 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Define __dirname equivalent for ES modules
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  webpack: (config) => {
+    config.cache = false; // Disable caching as needed
+
+    // Set up path alias
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      '@': path.resolve(__dirname, 'src'),
+    };
+
+    return config;
+  },
   // ! https://react-svgr.com/docs/next/
   // webpack(config) {
   //   // Grab the existing rule that handles SVG imports
@@ -28,17 +45,6 @@ const nextConfig = {
 
   //   return config;
   // },
-  webpack: (config) => {
-    config.cache = false; // Disable caching as needed
-
-    // Set up path alias
-    config.resolve.alias = {
-      ...(config.resolve.alias || {}),
-      '@': path.resolve(__dirname, 'src'),
-    };
-
-    return config;
-  },
   images: {
     remotePatterns: [
       {
