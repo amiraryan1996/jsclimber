@@ -9,7 +9,7 @@ export async function POST(req: Request) {
 
     const secret = process.env.WEBHOOKS_SECRET;
     const repoPath = process.env.REPO_PATH;
-    const app = process.env.APP;
+    // const app = process.env.APP;
 
     if (!secret || !repoPath) {
       console.error('Missing required environment variables.');
