@@ -26,6 +26,11 @@ npm install --production || exit 1
 echo "Building the project..."
 npm run build || exit 1
 
+# Ensure the public directory exists in the temp build
+if [ ! -d "$TEMP_BUILD_PATH/public" ]; then
+    mkdir -p $TEMP_BUILD_PATH/public
+fi
+
 echo "Deploying to live directory..."
 rsync -a --delete $TEMP_BUILD_PATH/.next $REPO_PATH/.next
 rsync -a --delete $TEMP_BUILD_PATH/node_modules $REPO_PATH/node_modules
