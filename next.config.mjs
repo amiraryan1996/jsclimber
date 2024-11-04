@@ -37,7 +37,7 @@ const nextConfig = {
       ...(config.resolve.alias || {}),
       '@': path.resolve(__dirname, 'src'),
     };
-
+    config.resolve.extensions = ['.ts', '.js'];
     return config;
   },
 

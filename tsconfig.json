@@ -19,8 +19,9 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-    }
+      "@/*": ["./src/*"]
+    },
+    "types": ["node"]
   },
   "include": [
     // ! https://react-svgr.com/docs/next/
