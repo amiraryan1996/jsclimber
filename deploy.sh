@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Define environment variables
 REPO_PATH="/home/jsclimbe/repositories/jsclimber"
 TEMP_BUILD_PATH="/home/jsclimbe/repositories/jsclimber-temp"
 APP_NAME="jsclimber.ir"
 
-# Pull latest changes into a temporary directory
 echo "Starting deployment..."
+
+# Clean up any previous temp files and copy the latest version
 rm -rf $TEMP_BUILD_PATH
 cp -R $REPO_PATH $TEMP_BUILD_PATH
 cd $TEMP_BUILD_PATH || exit
@@ -14,26 +14,25 @@ cd $TEMP_BUILD_PATH || exit
 echo "Pulling latest changes..."
 git pull origin main || exit
 
-# Clear both .next and node_modules to ensure a clean slate
-echo "Clearing .next cache & node_modules..."
-rm -rf $TEMP_BUILD_PATH/.next
-rm -rf $TEMP_BUILD_PATH/node_modules
+# Clear .next and node_modules to ensure a clean state
+echo "Clearing cache and reinstalling dependencies..."
+rm -rf .next
+rm -rf node_modules
 
 echo "Installing dependencies..."
-npm install || exit
+npm install --production || exit 1
 
 echo "Building the project..."
-npm run build || exit
+npm run build || exit 1
 
-# Copy built files to the main app directory
+# Syncing changes back to the live directory
 echo "Deploying to live directory..."
 rsync -a --delete $TEMP_BUILD_PATH/.next $REPO_PATH/.next
 rsync -a --delete $TEMP_BUILD_PATH/node_modules $REPO_PATH/node_modules
 rsync -a --delete $TEMP_BUILD_PATH/package.json $REPO_PATH/package.json
 rsync -a --delete $TEMP_BUILD_PATH/public $REPO_PATH/public
 
-# Restart the application with pm2
 echo "Restarting the application..."
-pm2 restart $APP_NAME
+pm2 restart $APP_NAME --update-env
 
 echo "Deployment completed successfully!"
