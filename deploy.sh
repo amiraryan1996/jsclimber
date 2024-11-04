@@ -17,6 +17,9 @@ git pull origin main || exit
 echo "Installing dependencies..."
 npm install || exit
 
+echo "Clearing .next cache..."
+rm -rf $TEMP_BUILD_PATH/.next
+
 echo "Building the project..."
 npm run build || exit
 

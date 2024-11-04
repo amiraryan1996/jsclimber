@@ -28,6 +28,10 @@ const nextConfig = {
 
   //   return config;
   // },
+  webpack: (config) => {
+    config.cache = false; // Disable Webpack caching
+    return config;
+  },
   images: {
     remotePatterns: [
       {
