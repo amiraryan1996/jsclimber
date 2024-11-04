@@ -78,14 +78,19 @@ fi
 
 # Step 7: Deploy to live directory
 echo "Deploying files to live directory..."
-if rsync -a --delete "$TEMP_BUILD_PATH/.next" "$REPO_PATH/.next" &&
-   rsync -a --delete "$TEMP_BUILD_PATH/node_modules" "$REPO_PATH/node_modules" &&
+
+# Sync the `.next` directory
+if rsync -a --delete "$TEMP_BUILD_PATH/.next/" "$REPO_PATH/.next/" &&
+   # Sync `node_modules` directory
+   rsync -a --delete "$TEMP_BUILD_PATH/node_modules/" "$REPO_PATH/node_modules/" &&
+   # Sync `package.json`
    rsync -a --delete "$TEMP_BUILD_PATH/package.json" "$REPO_PATH/package.json" &&
-   rsync -a --delete "$TEMP_BUILD_PATH/public" "$REPO_PATH/public"; then
-    echo "Deployment files synced successfully."
+   # Sync the `public` directory
+   rsync -a --delete "$TEMP_BUILD_PATH/public/" "$REPO_PATH/public/"; then
+   echo "Deployment files synced successfully."
 else
-    echo "File sync failed." >&2
-    exit 1
+   echo "File sync failed." >&2
+   exit 1
 fi
 
 # Step 8: Restart the application
