@@ -28,19 +28,18 @@ export async function POST(req: Request) {
     console.log('Received ref:', body.ref);
 
     if (githubSignature === signature && body.ref === 'refs/heads/main') {
-      exec(
-        `cd ${repoPath} && git pull && npm install && npm run build && pm2 restart ${app}`,
-        (error, stdout, stderr) => {
-          if (error) {
-            console.error(`Execution error: ${error}`);
-            return;
-          }
-          console.log(`stdout: ${stdout}`);
-          if (stderr) {
-            console.error(`stderr: ${stderr}`);
-          }
-        },
-      );
+      // exec(
+      //   `cd ${repoPath} && git pull && npm install && npm run build && pm2 restart ${app}`,
+      exec('/bin/bash /home/jsclimbe/repositories/jsclimber/deploy.sh', (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Execution error: ${error}`);
+          return;
+        }
+        console.log(`stdout: ${stdout}`);
+        if (stderr) {
+          console.error(`stderr: ${stderr}`);
+        }
+      });
       console.log('GitHub webhook executed successfully.');
       return new Response('Webhook handled successfully', { status: 200 });
     }
