@@ -15,15 +15,16 @@ export async function POST(req: Request) {
       return new Response('Server configuration error', { status: 500 });
     }
 
+    const body = await req.json();
     const signature =
-      'sha256=' +
-      crypto
-        .createHmac('sha256', secret)
-        .update(JSON.stringify(await req.json()))
-        .digest('hex');
+      'sha256=' + crypto.createHmac('sha256', secret).update(JSON.stringify(body)).digest('hex');
 
     const githubSignature = req.headers.get('x-hub-signature-256');
-    const body = await req.json();
+
+    // Debug logs to help with troubleshooting
+    console.log('Calculated signature:', signature);
+    console.log('GitHub provided signature:', githubSignature);
+    console.log('Received ref:', body.ref);
 
     if (githubSignature === signature && body.ref === 'refs/heads/main') {
       exec(
