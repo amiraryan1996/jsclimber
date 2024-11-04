@@ -35,7 +35,9 @@ export async function POST(req: Request) {
             return;
           }
           console.log(`stdout: ${stdout}`);
-          console.error(`stderr: ${stderr}`);
+          if (stderr) {
+            console.error(`stderr: ${stderr}`);
+          }
         },
       );
       console.log('GitHub webhook executed successfully.');
