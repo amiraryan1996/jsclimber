@@ -4,9 +4,11 @@ REPO_PATH="/home/jsclimbe/repositories/jsclimber"
 TEMP_BUILD_PATH="/home/jsclimbe/repositories/jsclimber-temp"
 APP_NAME="jsclimber.ir"
 
+exec > >(tee -i /home/jsclimbe/deploy.log)
+exec 2>&1
+
 echo "Starting deployment..."
 
-# Clean up any previous temp files and copy the latest version
 rm -rf $TEMP_BUILD_PATH
 cp -R $REPO_PATH $TEMP_BUILD_PATH
 cd $TEMP_BUILD_PATH || exit
@@ -14,7 +16,6 @@ cd $TEMP_BUILD_PATH || exit
 echo "Pulling latest changes..."
 git pull origin main || exit
 
-# Clear .next and node_modules to ensure a clean state
 echo "Clearing cache and reinstalling dependencies..."
 rm -rf .next
 rm -rf node_modules
@@ -25,7 +26,6 @@ npm install --production || exit 1
 echo "Building the project..."
 npm run build || exit 1
 
-# Syncing changes back to the live directory
 echo "Deploying to live directory..."
 rsync -a --delete $TEMP_BUILD_PATH/.next $REPO_PATH/.next
 rsync -a --delete $TEMP_BUILD_PATH/node_modules $REPO_PATH/node_modules
