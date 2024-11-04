@@ -41,3 +41,5 @@ pnpm-lock.yaml
 
 # Husky configuration
 .husky/
+
+.nvmrc
