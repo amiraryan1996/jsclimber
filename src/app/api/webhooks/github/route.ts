@@ -9,6 +9,7 @@ export async function POST(req: Request) {
 
     const secret = process.env.WEBHOOKS_SECRET;
     const repoPath = process.env.REPO_PATH;
+    const app = process.env.APP;
 
     if (!secret || !repoPath) {
       console.error('Missing required environment variables.');
@@ -28,7 +29,7 @@ export async function POST(req: Request) {
 
     if (githubSignature === signature && body.ref === 'refs/heads/main') {
       exec(
-        `cd ${repoPath} && git pull && npm install && npm run build && pm2 restart app`,
+        `cd ${repoPath} && git pull && npm install && npm run build && pm2 restart ${app}`,
         (error, stdout, stderr) => {
           if (error) {
             console.error(`Execution error: ${error}`);
