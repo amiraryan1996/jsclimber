@@ -29,7 +29,7 @@ export async function POST(req: Request) {
 
     if (githubSignature === signature && body.ref === 'refs/heads/main') {
       exec(
-        `cd ${repoPath} && pm2 stop ${app} && git pull && npm install && npm run build && pm2 restart ${app}`,
+        `cd ${repoPath} && git pull && npm install && npm run build && pm2 restart ${app}`,
         (error, stdout, stderr) => {
           if (error) {
             console.error(`Execution error: ${error}`);
