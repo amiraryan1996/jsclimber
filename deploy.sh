@@ -14,13 +14,13 @@ cd $TEMP_BUILD_PATH || exit
 echo "Pulling latest changes..."
 git pull origin main || exit
 
-echo "Installing dependencies..."
-npm install || exit
-
 # Clear both .next and node_modules to ensure a clean slate
 echo "Clearing .next cache & node_modules..."
 rm -rf $TEMP_BUILD_PATH/.next
 rm -rf $TEMP_BUILD_PATH/node_modules
+
+echo "Installing dependencies..."
+npm install || exit
 
 echo "Building the project..."
 npm run build || exit
