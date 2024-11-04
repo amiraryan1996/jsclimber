@@ -17,8 +17,10 @@ git pull origin main || exit
 echo "Installing dependencies..."
 npm install || exit
 
-echo "Clearing .next cache..."
+# Clear both .next and node_modules to ensure a clean slate
+echo "Clearing .next cache & node_modules..."
 rm -rf $TEMP_BUILD_PATH/.next
+rm -rf $TEMP_BUILD_PATH/node_modules
 
 echo "Building the project..."
 npm run build || exit
