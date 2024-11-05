@@ -12,14 +12,7 @@ exec 2>&1
 
 echo "===== Starting deployment at $(date) ====="
 
-# Step 1: Clean up and copy repository
-echo "Cleaning up previous temporary files..."
-if rm -rf "$TEMP_BUILD_PATH"; then
-    echo "Temporary files removed."
-else
-    echo "Failed to remove temporary files." >&2
-    exit 1
-fi
+# Step 1: copy repository
 
 echo "Copying repository to temporary path..."
 if cp -R "$REPO_PATH" "$TEMP_BUILD_PATH"; then
@@ -78,19 +71,12 @@ fi
 
 # Step 7: Deploy to live directory
 echo "Deploying files to live directory..."
-
-# Sync the `.next` directory
-if rsync -a --delete "$TEMP_BUILD_PATH/.next/" "$REPO_PATH/.next/" &&
-   # Sync `node_modules` directory
-   rsync -a --delete "$TEMP_BUILD_PATH/node_modules/" "$REPO_PATH/node_modules/" &&
-   # Sync `package.json`
-   rsync -a --delete "$TEMP_BUILD_PATH/package.json" "$REPO_PATH/package.json" &&
-   # Sync the `public` directory
-   rsync -a --delete "$TEMP_BUILD_PATH/public/" "$REPO_PATH/public/"; then
-   echo "Deployment files synced successfully."
+# Sync all files from the temporary build path to the live repository path
+if rsync -a --delete "$TEMP_BUILD_PATH/" "$REPO_PATH/"; then
+    echo "Deployment files synced successfully."
 else
-   echo "File sync failed." >&2
-   exit 1
+    echo "File sync failed." >&2
+    exit 1
 fi
 
 # Step 8: Restart the application
@@ -100,6 +86,14 @@ if pm2 restart "$APP_NAME" --update-env; then
 else
     echo "Application restart failed." >&2
     exit 1
+fi
+
+# Step 9: Cleanup temporary build directory
+echo "Cleaning up temporary build directory..."
+if rm -rf "$TEMP_BUILD_PATH"; then
+    echo "Temporary build directory removed."
+else
+    echo "Failed to remove temporary build directory." >&2
 fi
 
 echo "===== Deployment completed successfully at $(date) ====="
