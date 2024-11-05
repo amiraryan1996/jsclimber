@@ -79,16 +79,7 @@ else
     exit 1
 fi
 
-# Step 8: Restart the application
-echo "Restarting application with PM2..."
-if pm2 restart "$APP_NAME" --update-env; then
-    echo "Application restarted successfully."
-else
-    echo "Application restart failed." >&2
-    exit 1
-fi
-
-# Step 9: Cleanup temporary build directory
+# Step 8: Cleanup temporary build directory
 echo "Cleaning up temporary build directory..."
 if rm -rf "$TEMP_BUILD_PATH"; then
     echo "Temporary build directory removed."
@@ -97,3 +88,13 @@ else
 fi
 
 echo "===== Deployment completed successfully at $(date) ====="
+
+
+# Step 9: Restart the application
+echo "Restarting application with PM2..."
+if pm2 restart "$APP_NAME" --update-env; then
+    echo "Application restarted successfully."
+else
+    echo "Application restart failed." >&2
+    exit 1
+fi
