@@ -4,7 +4,7 @@
 REPO_PATH="/home/jsclimbe/repositories/jsclimber"
 TEMP_BUILD_PATH="/home/jsclimbe/repositories/jsclimber-temp"
 APP_NAME="jsclimber.ir"
-LOG_FILE="/home/jsclimbe/deploy.log"
+LOG_FILE="/home/jsclimbe/deploy_jsclimber.log"
 
 # Start logging
 exec > >(tee -a "$LOG_FILE")
