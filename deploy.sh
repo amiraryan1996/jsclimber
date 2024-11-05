@@ -60,13 +60,13 @@ else
     exit 1
 fi
 
-# Step 6: Ensure the public directory exists
+# Step 6: Ensure the public directory exists in REPO_PATH
 echo "Checking public directory..."
-if [ ! -d "$TEMP_BUILD_PATH/public" ]; then
-    mkdir -p "$TEMP_BUILD_PATH/public"
-    echo "Public directory created."
+if [ ! -d "$REPO_PATH/public" ]; then
+    mkdir -p "$REPO_PATH/public"
+    echo "Public directory created in live path."
 else
-    echo "Public directory exists."
+    echo "Public directory exists in live path."
 fi
 
 # Step 7: Deploy to live directory
@@ -92,6 +92,7 @@ echo "===== Deployment completed successfully at $(date) ====="
 
 # Step 9: Restart the application
 echo "Restarting application with PM2..."
+cd "$REPO_PATH" || { echo "Failed to navigate to live directory $REPO_PATH"; exit 1; }
 if pm2 restart "$APP_NAME" --update-env; then
     echo "Application restarted successfully."
 else
