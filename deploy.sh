@@ -26,11 +26,19 @@ cd "$TEMP_BUILD_PATH" || { echo "Failed to navigate to $TEMP_BUILD_PATH"; exit 1
 
 # Step 2: Git pull
 echo "Pulling latest changes from GitHub..."
-if git pull origin main; then
-    echo "Git pull completed."
-else
-    echo "Git pull failed." >&2
+retry_count=0
+max_retries=3
+
+until git pull origin main || [ "$retry_count" -ge "$max_retries" ]; do
+    retry_count=$((retry_count+1))
+    echo "Git pull failed. Retrying... ($retry_count/$max_retries)"
+    sleep 5
+done
+if [ "$retry_count" -ge "$max_retries" ]; then
+    echo "Git pull failed after $max_retries attempts." >&2
     exit 1
+else
+    echo "Git pull completed."
 fi
 
 # Step 3: Cache and dependencies cleanup
