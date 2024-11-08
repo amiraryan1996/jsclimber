@@ -44,7 +44,7 @@ const authConfig: NextAuthConfig = {
 
         try {
           // Step 2: Check if the user exists in the database
-          const userExists = await checkUserExists(profile?.email ?? '');
+          const userExists = await checkUserExists(profile?.email ?? '', baseUrl);
           console.log('User existence check result:', userExists);
 
           if (!userExists && intent == '/signin') {
@@ -56,7 +56,7 @@ const authConfig: NextAuthConfig = {
             return '/signin';
           }
           if (!userExists && intent === '/signup' && profile) {
-            const isRegistered = await registerUser(profile);
+            const isRegistered = await registerUser(profile, baseUrl);
             if (!isRegistered) throw new Error('Failed to register user during signup.');
           }
         } catch (error) {

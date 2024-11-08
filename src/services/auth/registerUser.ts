@@ -1,6 +1,12 @@
-export async function registerUser(profile: { name?: string | null; email?: string | null }) {
+export async function registerUser(
+  profile: {
+    name?: string | null;
+    email?: string | null;
+  },
+  baseUrl: string,
+) {
   try {
-    const response = await fetch('/api/auth/signup', {
+    const response = await fetch(`${baseUrl}/api/auth/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
