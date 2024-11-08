@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { UserAuthForm } from './user-auth-form';
+import { UserSigninForm } from './user-signin-form';
 
 export function SignInViewPage() {
   return (
@@ -45,7 +45,7 @@ export function SignInViewPage() {
               Enter your email below to Sign in your account
             </p>
           </div>
-          <UserAuthForm />
+          <UserSigninForm />
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{' '}
             <Link href="/signup" className="underline">

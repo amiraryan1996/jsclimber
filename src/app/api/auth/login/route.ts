@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     }
 
     // Password comparison
-    const isMatch = user && (await bcrypt.compare(password, user.password));
+    const isMatch = user && bcrypt.compare(password, user.password ?? '');
     if (isMatch) {
       const token = jwt.sign({ id: user.id }, jwtSecret);
       console.log('Password match, token generated:', token);

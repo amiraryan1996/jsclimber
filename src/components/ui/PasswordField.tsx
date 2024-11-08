@@ -39,7 +39,7 @@ export function PasswordField({
     setStrength(calculateStrength(password));
   };
   return (
-    <>
+    <div>
       <FormField
         control={control}
         name={name}
@@ -83,6 +83,6 @@ export function PasswordField({
           }`}
         />
       )}
-    </>
+    </div>
   );
 }

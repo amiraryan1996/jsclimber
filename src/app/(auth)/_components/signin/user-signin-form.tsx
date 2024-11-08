@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
@@ -14,15 +13,17 @@ import Link from 'next/link';
 import { PasswordField } from '@/components/ui/PasswordField';
 import { passwordSchema } from '../passwordSchema';
 import { checkUserExistence } from '@/lib/utils';
-import { GithubSignInButton } from './github-auth-button';
+import GithubAuthButton from '../github-auth-button';
+import { loginUser } from '@/services/auth';
 
 const formSchema = z.object({
   emailId: z.string().email({ message: 'Enter a valid email address' }),
   password: passwordSchema,
 });
-type UserFormValue = z.infer<typeof formSchema>;
+export type UserFormValue = z.infer<typeof formSchema>;
 
-export function UserAuthForm() {
+export function UserSigninForm() {
+  const { toast } = useToast();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl');
   const [loading, startTransition] = useTransition();
@@ -33,12 +34,12 @@ export function UserAuthForm() {
     defaultValues: { emailId: '', password: '' },
   });
 
-  // user Email validation state
   const [userExists, setUserExists] = useState<boolean>(false);
   const emailSchema = z.string().email();
 
   const handleEmailChange = debounce(async (email: string) => {
     const isValidEmail = emailSchema.safeParse(email).success;
+    // logical NOT operator: reverses the truthness of the value
     if (!isValidEmail) {
       setUserExists(false);
       return;
@@ -47,47 +48,10 @@ export function UserAuthForm() {
     setUserExists(exists);
   }, 150);
 
-  const { toast } = useToast();
-  // Submission handler
   const onSubmit = async (data: UserFormValue) => {
     console.log('Submitting login with data:', data);
-
     startTransition(() => {
-      signIn('credentials', {
-        emailId: data.emailId,
-        password: data.password,
-        callbackUrl: callbackUrl ?? '/dashboard',
-        // waiting for toasts then manually redirect to callbackurl
-        redirect: false,
-      })
-        .then((response) => {
-          // failed login
-          if (response?.error) {
-            toast({
-              variant: 'destructive',
-              title: 'Login error',
-              description: response.error,
-            });
-            console.error('Login error:', response.error);
-            // successful login
-          } else if (response?.ok && response?.url) {
-            toast({
-              title: 'Login Success',
-              description: 'Logged in successfully Redirecting to Dashboard...',
-            });
-            // Redirect to the callback URL or dashboard
-            window.location.href = response.url;
-          }
-        })
-        // Catch and handle unexpected errors
-        .catch((error) => {
-          toast({
-            variant: 'destructive',
-            title: 'Login error',
-            description: error.message || 'An error occurred during Login.',
-          });
-          console.error('Login error:', error);
-        });
+      loginUser(data, callbackUrl, toast);
     });
   };
 
@@ -106,6 +70,7 @@ export function UserAuthForm() {
                     type="email"
                     disabled={loading}
                     placeholder="example@mail.com"
+                    autoComplete="on"
                     onChange={(e) => {
                       field.onChange(e);
                       handleEmailChange(e.target.value);
@@ -148,7 +113,7 @@ export function UserAuthForm() {
           <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
         </div>
       </div>
-      <GithubSignInButton />
+      <GithubAuthButton />
     </>
   );
 }

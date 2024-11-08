@@ -24,7 +24,7 @@ export const db = new sqlite3.Database(
 
 // C.R.U.D operations to the db:
 // Read
-export const apiGet = async (query: string, params: unknown[] = []) => {
+export const apiGet = async <T = unknown>(query: string, params: unknown[] = []): Promise<T[]> => {
   return await new Promise((resolve, reject) => {
     // syntax: all(sql [, param, ...] [, callback]).
     // retrieves all result rows and stores them in memory.
@@ -33,7 +33,7 @@ export const apiGet = async (query: string, params: unknown[] = []) => {
         console.log(err);
         return reject(err);
       }
-      return resolve(rows);
+      return resolve(rows as T[]);
     });
   });
 };

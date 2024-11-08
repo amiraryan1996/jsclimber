@@ -27,7 +27,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const passwordMatches = bcrypt.compareSync(password, user.password);
+    const passwordMatches = bcrypt.compareSync(password, user.password ?? '');
     console.log('Password validation result:', passwordMatches);
 
     if (passwordMatches) {

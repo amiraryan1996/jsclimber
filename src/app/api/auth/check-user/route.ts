@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     } else {
       console.warn('User not found for email:', emailId);
       return NextResponse.json(
-        { userExists: false, message: 'User does not exist', status: 404 },
+        { userExists: false, message: `User with ${emailId} does not exist`, status: 404 },
         { status: 404 },
       );
     }

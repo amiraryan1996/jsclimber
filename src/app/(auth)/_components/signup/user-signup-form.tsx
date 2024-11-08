@@ -8,12 +8,13 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useRouter } from 'next/navigation';
-import { GithubSignupButton } from './github-auth-button';
 import { passwordSchema } from '../passwordSchema';
 import { PasswordField } from '@/components/ui/PasswordField';
 import { debounce } from 'lodash';
 import { checkUserExistence } from '@/lib/utils';
 import { useState } from 'react';
+import GithubAuthButton from '../github-auth-button';
+import { signupUser } from '@/services/auth';
 
 const FormSchema = z.object({
   name: z.string().min(2, {
@@ -25,6 +26,7 @@ const FormSchema = z.object({
   password: passwordSchema,
 });
 
+export type signupDataType = z.infer<typeof FormSchema>;
 // Function Scope
 export function SignupForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -38,48 +40,17 @@ export function SignupForm() {
   });
 
   const router = useRouter();
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
-    // Block Scope
-    try {
-      // ! Next Fns, fetch:  https://nextjs.org/docs/app/api-reference/functions/fetch
-      const response = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-      // true: (status in the range 200-299)
-      if (response.ok) {
-        const data = await response.json();
-        toast({
-          title: data.message,
-          description: 'Redirecting to sign in page...',
-        });
-        router.push('/signin');
-      } else {
-        const data = await response.json();
-        toast({
-          variant: 'destructive',
-          title: data.message,
-          description: data.error,
-        });
-      }
-    } catch (error) {
-      console.error(error);
-      toast({
-        variant: 'destructive',
-        title: 'Server error',
-        description: 'An unexpected error occurred',
-      });
-    }
+  async function onSubmit(data: signupDataType) {
+    await signupUser(data, toast, router);
   }
 
   // user Email validation state
   const [userExists, setUserExists] = useState<boolean>(true);
   const emailSchema = z.string().email();
+
   const handleEmailChange = debounce(async (email: string) => {
     const isValidEmail = emailSchema.safeParse(email).success;
     if (!isValidEmail) {
-      // entered invalid mail => user exists(not green)
       setUserExists(true);
       return;
     }
@@ -112,7 +83,6 @@ export function SignupForm() {
                 <Input
                   {...field}
                   type="email"
-                  // disabled={loading}
                   placeholder="example@mail.com"
                   onChange={(e) => {
                     field.onChange(e);
@@ -128,16 +98,11 @@ export function SignupForm() {
             </FormItem>
           )}
         />
-        <PasswordField
-          showStrength={true}
-          name="password"
-          placeholder="Enter password"
-          // loading={loading}
-        />
+        <PasswordField showStrength={true} name="password" placeholder="Enter password" />
         <Button type="submit" className="w-full">
           Sign up
         </Button>
-        <GithubSignupButton />
+        <GithubAuthButton />
       </form>
     </Form>
   );
