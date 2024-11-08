@@ -16,7 +16,7 @@ echo "===== Starting deployment at $(date) ====="
 
 echo "Copying repository to temporary path..."
 if cp -R "$REPO_PATH" "$TEMP_BUILD_PATH"; then
-    echo "Repository copied successfully."
+    echo "Repository copied successfully ."
 else
     echo "Failed to copy repository." >&2
     exit 1
