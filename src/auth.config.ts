@@ -5,6 +5,7 @@ import GithubProvider from 'next-auth/providers/github';
 // import { SQLiteAdapter } from './services/auth/SqliteAdapter';
 
 const authConfig: NextAuthConfig = {
+  trustHost: process.env.AUTH_TRUST_HOST === 'true',
   // adapter: SQLiteAdapter(),
   providers: [
     // https://next-auth.js.org/providers/github#configuration
@@ -68,7 +69,8 @@ const authConfig: NextAuthConfig = {
       return true;
     },
   },
-  debug: process.env.NODE_ENV === 'development',
+  debug: true,
+  // debug: process.env.NODE_ENV === 'development',
   session: {
     strategy: 'jwt',
     // how long (seconds) a user's session is valid before expiring
