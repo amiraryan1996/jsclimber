@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 import path from 'path';
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Define __dirname equivalent for ES modules
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -51,6 +54,17 @@ const nextConfig = {
     ],
   },
   transpilePackages: ['geist'],
+  env: {
+    HOST: process.env.HOST,
+    PORT: process.env.PORT,
+    REPO_PATH: process.env.REPO_PATH,
+    WEBHOOKS_SECRET: process.env.WEBHOOKS_SECRET,
+    AUTH_SECRET: process.env.AUTH_SECRET,
+    GITHUB_ID: process.env.GITHUB_ID,
+    GITHUB_SECRET: process.env.GITHUB_SECRET,
+    AUTH_TRUST_HOST: process.env.AUTH_TRUST_HOST,
+    AUTH_URL: process.env.AUTH_URL,
+  },
 };
 
 export default nextConfig;
