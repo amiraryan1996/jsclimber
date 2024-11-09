@@ -2,10 +2,10 @@ import { checkUserExists, registerUser, verifyCredentials } from '@/services/aut
 import type { NextAuthConfig } from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
 import GithubProvider from 'next-auth/providers/github';
-import { SQLiteAdapter } from './services/auth/SqliteAdapter';
+// import { SQLiteAdapter } from './services/auth/SqliteAdapter';
 
 const authConfig: NextAuthConfig = {
-  adapter: SQLiteAdapter(),
+  // adapter: SQLiteAdapter(),
   providers: [
     // https://next-auth.js.org/providers/github#configuration
     GithubProvider({

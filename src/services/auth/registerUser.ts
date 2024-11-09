@@ -5,6 +5,8 @@ export async function registerUser(
   },
   baseUrl: string,
 ) {
+  console.log(`Attempting to register user from: ${baseUrl}/regidterUser`);
+
   try {
     const response = await fetch(`${baseUrl}/api/auth/signup`, {
       method: 'POST',
