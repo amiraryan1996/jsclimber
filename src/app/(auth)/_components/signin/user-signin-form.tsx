@@ -113,7 +113,7 @@ export function UserSigninForm() {
           <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
         </div>
       </div>
-      <GithubAuthButton />
+      <GithubAuthButton intent="/signin" />
     </>
   );
 }

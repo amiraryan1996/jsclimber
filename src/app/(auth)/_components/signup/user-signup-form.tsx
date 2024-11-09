@@ -102,7 +102,7 @@ export function SignupForm() {
         <Button type="submit" className="w-full">
           Sign up
         </Button>
-        <GithubAuthButton />
+        <GithubAuthButton intent="/signup" />
       </form>
     </Form>
   );

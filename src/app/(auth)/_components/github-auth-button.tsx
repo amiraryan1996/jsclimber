@@ -4,7 +4,7 @@ import { signIn } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/icons';
 
-export default function GithubAuthButton() {
+export default function GithubAuthButton({ intent }: { intent: string }) {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl');
 
@@ -12,7 +12,7 @@ export default function GithubAuthButton() {
     console.log('Initiating GitHub sign-in...');
     await signIn('github', {
       callbackUrl: callbackUrl ?? '/dashboard',
-      state: JSON.stringify({ intent: '/signin' }),
+      state: JSON.stringify({ intent: intent }),
     });
   };
 
