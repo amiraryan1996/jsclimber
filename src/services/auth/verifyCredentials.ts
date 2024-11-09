@@ -6,7 +6,7 @@ export async function verifyCredentials(
 ): Promise<User | null> {
   console.log('Authorizing user with credentials:', credentials);
   try {
-    const response = await fetch(`${baseUrl}api/auth/verify-credentials`, {
+    const response = await fetch(`${baseUrl}/api/auth/verify-credentials`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

@@ -1,7 +1,7 @@
 export async function checkUserExists(email: string, baseUrl: string): Promise<boolean> {
   console.log(`Attempting to fetch user existence from: ${baseUrl}/check-user`);
   try {
-    const response = await fetch(`${baseUrl}api/auth/check-user`, {
+    const response = await fetch(`${baseUrl}/api/auth/check-user`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ emailId: email }),
