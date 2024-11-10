@@ -39,8 +39,20 @@ const authConfig: NextAuthConfig = {
           throw new Error('AUTH_URL is not defined in the environment variables.');
         }
         // Step 1: Parse intent from the account state
-        const state = account?.state ? JSON.parse(account.state.toString()) : {};
-        const intent = state?.intent;
+        // const state = account?.state ? JSON.parse(account.state.toString()) : {};
+        // const intent = state?.intent;
+        // console.log(`GitHub sign-in initiated with intent: ${intent}`);
+
+        // Step 1:Parse state if it exists and ensure JSON parsing is done safely
+        let intent;
+        if (account?.state) {
+          try {
+            const stateData = JSON.parse(account.state as string); // I'm sure state is string.
+            intent = stateData.intent;
+          } catch (error) {
+            console.error('Failed to parse state data:', error);
+          }
+        }
         console.log(`GitHub sign-in initiated with intent: ${intent}`);
 
         try {
