@@ -1,36 +1,134 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ![](https://jsclimber.ir/.assets/img/logo.png)
 
-## Getting Started
+<p align="center">
+  <a href="#bulb-about">About</a> &nbsp;&bull;&nbsp;
+  <a href="#mag_right-research">Research</a> &nbsp;&bull;&nbsp;
+  <a href="#computer-running">Running</a> &nbsp;&bull;&nbsp;
+  <a href="#toolbox-tech-stack">Tech Stack</a>
+</p>
 
-First, run the development server:
+<br>
+ 
+## :bulb: About
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The main objective of this **jsclimber** project is to represent the state-of-the-simplicity of a **fullstack** application in typeScript with Next.js using [**React**](https://react.dev/) (frontend), Next.js [**Route Handlers**](https://nextjs.org/docs/app/building-your-application/routing/route-handlers), [**SQLite**](https://github.com/TryGhost/node-sqlite3/wiki/API), and [**Prisma ORM**](https://www.prisma.io/docs) (backend).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> I never need to write separate backends for projects I want to create. I can build my entire project with Next.js.
+> -- Lee Robinson
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### :star: Give a Star!
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Support this project by **giving it a star**. Thanks!
 
-## Learn More
+## :mag_right: Research
 
-To learn more about Next.js, take a look at the following resources:
+<details>
+    <summary> Auth.js Sqlite Adapter </summary>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Auth.js Sqlite Adapter
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+// TODO
 
-## Deploy on Vercel
+</details>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## :computer: Running
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+different settings for environments where the application runs: development, production, etc.
+
+<details>
+    <summary>Development</summary>
+
+### Development
+
+// TODO
+
+</details>
+
+<details>
+    <summary>Production</summary>
+
+### Production
+
+// TODO
+
+</details>
+
+<details>
+    <summary>Migrations</summary>
+
+### Migrations
+
+// TODO
+
+</details>
+
+## :test_tube: Tests
+
+<details>
+    <summary>Unit Tests</summary>
+
+### Unit Tests
+
+// TODO
+
+</details>
+
+<details>
+    <summary>Integration Tests</summary>
+
+### Integration Tests
+
+// TODO
+
+</details>
+
+<details>
+    <summary>Load Tests</summary>
+
+### Load Testing
+
+// TODO
+
+</details>
+
+## :book: References
+
+### Books
+
+<!-- // TODO -->
+
+### Articles
+
+<!-- // TODO -->
+
+### Blogs
+
+<!-- // TODO -->
+
+### Posts
+
+<!-- // TODO -->
+
+### Projects
+
+<!-- // TODO -->
+
+## :toolbox: Tech Stack
+
+### Worker Services
+
+- [Sqlite](https://sqlite.org/about.html) - An in-process library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine;
+
+### Web API
+
+- [.Next.js v14](https://nextjs.org/docs) - A React framework for building full-stack web applications;
+- [Zod](https://zod.dev/) - A popular Typescript library for building TypeScript-first schema;
+
+### Web APP
+
+- [React.js v18](https://devblogs.microsoft.com/dotnet/announcing-ef7/) - A JavaScript library for building user interfaces;
+- [Shadcn](https://ui.shadcn.com/docs) - Beautifully designed components that you can copy and paste into your apps.
+
+## Contributing
+
+All contributions are welcome.
