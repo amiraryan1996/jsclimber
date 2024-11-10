@@ -68,7 +68,11 @@ const authConfig: NextAuthConfig = {
       console.log('user signed in successfully');
       return true;
     },
+    async redirect({ url, baseUrl }) {
+      return url.startsWith(baseUrl) ? url : baseUrl;
+    },
   },
+
   debug: true,
   // debug: process.env.NODE_ENV === 'development',
   session: {

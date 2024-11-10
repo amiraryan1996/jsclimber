@@ -8,9 +8,11 @@ export async function checkUserExists(email: string, baseUrl: string): Promise<b
     });
 
     const data = await response.json();
-    if (!response.ok) {
-      console.error(data.message, data.error);
-      throw new Error(data.message);
+    if (response.status === 404) {
+      console.log(`User with ${email} does not exist.`);
+      return false;
+    } else if (!response.ok) {
+      throw new Error(data.message || 'Failed to check user existence');
     }
     console.log(data.message);
     return data.userExists;
