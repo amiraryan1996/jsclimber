@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { auth } from '@/auth';
 import Providers from '@/components/layout/providers';
 import { Toaster } from '@/components/ui/toaster';
+import Header from '@/app/_components/header';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -14,13 +14,15 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <Providers session={session}>
+        <Providers>
           <Toaster />
-          {children}
+          <div className="container mx-auto flex min-h-screen flex-col">
+            <Header />
+            {children}
+          </div>
         </Providers>
       </body>
     </html>

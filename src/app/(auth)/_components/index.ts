@@ -1,5 +1,4 @@
-export { SignUpViewPage } from './signup/signup-view';
-export { SignupForm } from './signup/user-signup-form';
+export { SignUpViewPage } from './sign-up/signup-view';
+export { SignupForm } from './sign-up/user-signup-form';
 
-export { UserSigninForm } from './signin/user-signin-form';
-export { SignInViewPage } from './signin/signin-view';
+export { SignInViewPage } from './sign-in/signin-view';

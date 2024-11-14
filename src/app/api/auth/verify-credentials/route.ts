@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import bcrypt from 'bcrypt';
-import { getUserByEmailId } from '../../users/getUserByEmailId';
+import bcrypt from 'bcryptjs';
+import { getUserByEmail } from '@/services/user/get-user-by-email';
 
 export async function POST(req: Request) {
   if (req.method !== 'POST') {
@@ -15,38 +15,30 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { emailId, password } = await req.json();
-    console.log('Verifying credentials for email:', emailId);
+    const { email, password } = await req.json();
+    console.log('Verifying credentials for email:', email);
+    const baseUrl = process.env.AUTH_URL;
+    const user = await getUserByEmail({ email, baseUrl });
 
-    const user = await getUserByEmailId(emailId);
     if (!user) {
-      console.warn('User not found for email:', emailId);
+      console.warn('User not found for email:', email);
       return NextResponse.json(
         { message: 'Invalid email or password', status: 401 },
         { status: 401 },
       );
     }
 
-    const passwordMatches = bcrypt.compareSync(password, user.password ?? '');
+    const passwordMatches = bcrypt.compareSync(password, user.password);
     console.log('Password validation result:', passwordMatches);
 
     if (passwordMatches) {
       return NextResponse.json(
         {
           message: 'Authentication successful',
-          user: { id: user.id, name: user.name, email: user.emailId },
-          status: 200,
+          user: { id: user.id, name: user.name, email: user.email },
         },
         { status: 200 },
       );
-      // return NextResponse.json(
-      //       {
-      //         id: user.id,
-      //         name: user.name,
-      //         email: user.emailId,
-      //       },
-      //       { status: 200 }
-      //     );
     } else {
       return NextResponse.json(
         { message: 'Invalid email or password', status: 401 },

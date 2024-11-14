@@ -40,7 +40,7 @@ import {
   GalleryVerticalEnd,
   LogOut,
 } from 'lucide-react';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
@@ -203,7 +203,7 @@ export default function AppSidebar({ children }: { children: React.ReactNode }) 
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => signOut()}>
                     <LogOut />
                     Log out
                   </DropdownMenuItem>

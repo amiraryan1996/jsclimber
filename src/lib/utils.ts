@@ -46,16 +46,6 @@ export function formatBytes(
   }`;
 }
 
-export async function checkUserExistence(email: string) {
-  const res = await fetch('/api/auth/check-user', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ emailId: email }),
-  });
-  const data = await res.json();
-  return data.userExists;
-}
-
 export function calculateStrength(value: string) {
   let score = 0;
   // scoring based on passwordSchema

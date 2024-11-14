@@ -1,5 +1,5 @@
 import { signIn } from 'next-auth/react';
-import { UserFormValue } from '@/app/(auth)/_components/signin/user-signin-form';
+import { UserFormValue } from '@/app/(auth)/_components/sign-in/user-signin-form';
 
 export function loginUser(
   data: UserFormValue,
@@ -12,7 +12,7 @@ export function loginUser(
   },
 ) {
   signIn('credentials', {
-    emailId: data.emailId,
+    email: data.email,
     password: data.password,
     callbackUrl: callbackUrl ?? '/dashboard',
     redirect: false,
@@ -29,7 +29,7 @@ export function loginUser(
       if (response?.ok && response?.url) {
         toast({
           title: 'Login Success',
-          description: 'Logged in successfully Redirecting to Dashboard...',
+          description: 'Redirecting to Dashboard...',
         });
         window.location.href = response.url;
       }
