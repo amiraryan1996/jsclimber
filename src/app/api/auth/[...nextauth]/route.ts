@@ -95,10 +95,10 @@ const handler = NextAuth({
   },
 
   debug: true,
-  session: {
-    strategy: 'jwt',
-    // how long (seconds) a user's session is valid before expiring
-    maxAge: 432000, // 5days
-  },
+  // When using "database", the session cookie will only contain a sessionToken value, which is used to look up the session in the database.
+  // session: {
+  //   strategy: 'jwt',
+  //   maxAge: 432000, // 5days
+  // },
 });
 export { handler as GET, handler as POST };
