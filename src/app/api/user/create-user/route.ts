@@ -38,7 +38,7 @@ export async function POST(req: Request) {
       const sessionToken = generateRandomSessionToken();
       const session = await createSession(sessionToken, newUser.id);
       await setSessionCookie(sessionToken, session.expiresAt);
-      revalidatePath('/dashboard', 'layout');
+      revalidatePath('/sign-up', 'layout');
 
       return NextResponse.json(
         { message: `User ${newUser.firstName} created with email ${newUser.email}` },
