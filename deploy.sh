@@ -5,6 +5,7 @@ REPO_PATH="/home/jsclimbe/repositories/jsclimber"
 TEMP_BUILD_PATH="/home/jsclimbe/repositories/jsclimber-temp"
 APP_NAME="jsclimber.ir"
 LOG_FILE="/home/jsclimbe/deploy_jsclimber.log"
+HTACCESS="/home/jsclimbe/public_html/.htaccess"
 
 # Start logging
 exec > >(tee -a "$LOG_FILE")
@@ -68,7 +69,16 @@ else
     exit 1
 fi
 
-# Step 6: Ensure the public directory exists in REPO_PATH
+# Step 6: Clear .htaccess file content
+echo "Clearing .htaccess file content..."
+if > "$HTACCESS"; then
+    echo ".htaccess file cleared successfully."
+else
+    echo "Failed to clear .htaccess file." >&2
+    exit 1
+fi
+
+# Step 7: Ensure the public directory exists in REPO_PATH
 echo "Checking public directory..."
 if [ ! -d "$REPO_PATH/public" ]; then
     mkdir -p "$REPO_PATH/public"
@@ -77,7 +87,7 @@ else
     echo "Public directory exists in live path."
 fi
 
-# Step 7: Deploy to live directory
+# Step 8: Deploy to live directory
 echo "Deploying files to live directory..."
 # Sync all files from the temporary build path to the live repository path
 if rsync -a --delete "$TEMP_BUILD_PATH/" "$REPO_PATH/"; then
@@ -87,7 +97,7 @@ else
     exit 1
 fi
 
-# Step 8: Cleanup temporary build directory
+# Step 9: Cleanup temporary build directory
 echo "Cleaning up temporary build directory..."
 if rm -rf "$TEMP_BUILD_PATH"; then
     echo "Temporary build directory removed."
@@ -98,7 +108,7 @@ fi
 echo "===== Deployment completed successfully at $(date) ====="
 
 
-# Step 9: Restart the application
+# Step 10: Restart the application
 echo "Restarting application with PM2..."
 cd "$REPO_PATH" || { echo "Failed to navigate to live directory $REPO_PATH"; exit 1; }
 if pm2 restart "$APP_NAME" --update-env; then

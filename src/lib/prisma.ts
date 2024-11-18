@@ -1,3 +1,4 @@
+// src/lib/prisma.ts
 // https://www.robinwieruch.de/next-prisma-sqlite/
 import { PrismaClient } from '@prisma/client';
 
