@@ -69,15 +69,14 @@ else
     exit 1
 fi
 
-# Step 6: Rewrite .htaccess file
-echo "Rewriting .htaccess file with required lines..."
-if echo -e "RewriteEngine On\nRewriteRule ^/?(.*)$ http://127.0.0.1:4803/\$1 [P,L]" > "$HTACCESS"; then
-    echo ".htaccess file updated successfully."
+# Step 6: Clear .htaccess file content while keeping the first 5 lines
+echo "Clearing .htaccess file content while keeping the first 5 lines..."
+if head -n 5 "$HTACCESS" > "${HTACCESS}.tmp" && mv "${HTACCESS}.tmp" "$HTACCESS"; then
+    echo ".htaccess file cleared successfully, keeping the first 5 lines."
 else
-    echo "Failed to update .htaccess file." >&2
+    echo "Failed to clear .htaccess file while keeping the first 5 lines." >&2
     exit 1
 fi
-
 
 # Step 7: Ensure the public directory exists in REPO_PATH
 echo "Checking public directory..."
