@@ -69,14 +69,15 @@ else
     exit 1
 fi
 
-# Step 6: Clear .htaccess file content
-echo "Clearing .htaccess file content..."
-if > "$HTACCESS"; then
-    echo ".htaccess file cleared successfully."
+# Step 6: Rewrite .htaccess file
+echo "Rewriting .htaccess file with required lines..."
+if echo -e "RewriteEngine On\nRewriteRule ^/?(.*)$ http://127.0.0.1:4803/\$1 [P,L]" > "$HTACCESS"; then
+    echo ".htaccess file updated successfully."
 else
-    echo "Failed to clear .htaccess file." >&2
+    echo "Failed to update .htaccess file." >&2
     exit 1
 fi
+
 
 # Step 7: Ensure the public directory exists in REPO_PATH
 echo "Checking public directory..."
