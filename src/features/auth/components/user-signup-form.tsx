@@ -1,5 +1,4 @@
 'use client';
-// Global Scope
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -7,49 +6,47 @@ import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { passwordSchema } from '../passwordSchema';
+import { passwordSchema } from '../types/passwordSchema';
 import { PasswordField } from '@/components/ui/PasswordField';
 import { debounce } from 'lodash';
-import { useState } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { createUser } from '@/services/user/create-user';
-import { loginUser } from '@/services/auth';
-import { getUserByEmail } from '@/services/user/get-user-by-email';
+import { useState, useTransition } from 'react';
+import { getUserByEmail } from '@/features/auth/services/get-user-by-email';
+import { createUser } from '@/features/auth/services/create-user';
+import { useRouter } from 'next/navigation';
 
-const FormSchema = z.object({
-  name: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
-  email: z.string().email().min(5, {
-    message: 'Enter a valid email address',
-  }),
-  password: passwordSchema,
-});
+const FormSchema = z
+  .object({
+    firstName: z.string().min(2, {
+      message: 'Username must be at least 2 characters.',
+    }),
+    lastName: z.string().min(2, {
+      message: 'Username must be at least 2 characters.',
+    }),
+    email: z.string().email().min(5, {
+      message: 'Enter a valid email address',
+    }),
+    password: passwordSchema,
+    confirmPassword: passwordSchema,
+  })
+  .refine((data) => data.password == data.confirmPassword, {
+    message: 'passwords doesnt match!',
+    path: ['confirmPassword'],
+  });
 
-export type signupDataType = z.infer<typeof FormSchema>;
+type signupDataType = z.infer<typeof FormSchema>;
 // Function Scope
 export function SignupForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     mode: 'onChange',
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      name: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
+      confirmPassword: '',
     },
   });
-
-  const { toast } = useToast();
-
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl');
-
-  async function onSubmit(data: signupDataType) {
-    const isRegistered = await createUser({ data, toast });
-    if (isRegistered === true) {
-      loginUser(data, callbackUrl, toast);
-    }
-  }
 
   const [userExists, setUserExists] = useState<boolean>(true);
 
@@ -64,13 +61,31 @@ export function SignupForm() {
     setUserExists(Boolean(user));
   }, 150);
 
+  const [loading, startTransition] = useTransition();
+  const { toast } = useToast();
+  const router = useRouter();
+  const onSubmit = async (data: signupDataType) => {
+    startTransition(() => createUser({ data, toast, router }));
+  };
+
   return (
-    // TODO: Sign up skeleton.
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-3">
         <FormField
           control={form.control}
-          name="name"
+          name="firstName"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input placeholder="john" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="lastName"
           render={({ field }) => (
             <FormItem>
               <FormControl>
@@ -105,8 +120,9 @@ export function SignupForm() {
           )}
         />
         <PasswordField showStrength={true} name="password" placeholder="Enter password" />
+        <PasswordField showStrength={true} name="confirmPassword" placeholder="Enter password" />
         <Button type="submit" className="w-full">
-          Sign up
+          {loading ? 'Signing up' : 'Sign up'}
         </Button>
       </form>
     </Form>

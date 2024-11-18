@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
-const UserSigninForm = dynamic(() => import('./user-signin-form'), { ssr: false });
+import UserSigninForm from './user-signin-form';
 
 export function SignInViewPage() {
   return (

@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { SignInViewPage } from '../_components';
+import { SignInViewPage } from '@/features/auth/components';
 import { Suspense } from 'react';
 
 export const metadata: Metadata = {
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function SignIn() {
   return (
-    // TODO skeleton for SignUp
+    // TODO skeleton for Sign ip
     <Suspense>
       <SignInViewPage />
     </Suspense>

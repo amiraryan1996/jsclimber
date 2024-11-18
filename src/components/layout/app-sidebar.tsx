@@ -40,7 +40,6 @@ import {
   GalleryVerticalEnd,
   LogOut,
 } from 'lucide-react';
-import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
@@ -49,6 +48,7 @@ import { Icons } from '../icons';
 import SearchInput from '../search-input';
 import ThemeToggle from './ThemeToggle/theme-toggle';
 import { UserNav } from './user-nav';
+import { signOut } from '@/features/auth/actions/sign-out';
 
 export const company = {
   name: 'Acme Inc',
@@ -58,8 +58,7 @@ export const company = {
 
 export default function AppSidebar({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = React.useState(false);
-  // ! https://next-auth.js.org/getting-started/example
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const pathname = usePathname();
   // Only render after first client-side mount
   React.useEffect(() => {
@@ -148,17 +147,17 @@ export default function AppSidebar({ children }: { children: React.ReactNode }) 
                     className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                   >
                     <Avatar className="h-8 w-8 rounded-lg">
-                      <AvatarImage
+                      {/* <AvatarImage
                         src={session?.user?.image || ''}
                         alt={session?.user?.name || ''}
-                      />
+                      /> */}
                       <AvatarFallback className="rounded-lg">
-                        {session?.user?.name?.slice(0, 2)?.toUpperCase() || 'CN'}
+                        {/* {session?.user?.name?.slice(0, 2)?.toUpperCase() || 'CN'} */}
                       </AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold">{session?.user?.name || ''}</span>
-                      <span className="truncate text-xs">{session?.user?.email || ''}</span>
+                      {/* <span className="truncate font-semibold">{session?.user?.name || ''}</span>
+                      <span className="truncate text-xs">{session?.user?.email || ''}</span> */}
                     </div>
                     <ChevronsUpDown className="ml-auto size-4" />
                   </SidebarMenuButton>
@@ -173,16 +172,16 @@ export default function AppSidebar({ children }: { children: React.ReactNode }) 
                     <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                       <Avatar className="h-8 w-8 rounded-lg">
                         <AvatarImage
-                          src={session?.user?.image || ''}
-                          alt={session?.user?.name || ''}
+                        // src={session?.user?.image || ''}
+                        // alt={session?.user?.name || ''}
                         />
                         <AvatarFallback className="rounded-lg">
-                          {session?.user?.name?.slice(0, 2)?.toUpperCase() || 'CN'}
+                          {/* {session?.user?.name?.slice(0, 2)?.toUpperCase() || 'CN'} */}
                         </AvatarFallback>
                       </Avatar>
                       <div className="grid flex-1 text-left text-sm leading-tight">
-                        <span className="truncate font-semibold">{session?.user?.name || ''}</span>
-                        <span className="truncate text-xs"> {session?.user?.email || ''}</span>
+                        {/* <span className="truncate font-semibold">{session?.user?.name || ''}</span>
+                        <span className="truncate text-xs"> {session?.user?.email || ''}</span> */}
                       </div>
                     </div>
                   </DropdownMenuLabel>

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Providers from '@/components/layout/providers';
 import { Toaster } from '@/components/ui/toaster';
-import Header from '@/app/_components/header';
+import Header from '@/components/layout/header/header';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
