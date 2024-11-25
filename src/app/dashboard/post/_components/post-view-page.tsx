@@ -1,12 +1,11 @@
 import { notFound } from 'next/navigation';
-import ProductForm from './product-form';
 import { prisma } from '@/lib/prisma';
+import PostForm from './post-form';
 
 type TPostViewPageProps = {
   postTitle: string;
 };
-
-export default async function ProductViewPage({ postTitle }: TPostViewPageProps) {
+export default async function PostViewPage({ postTitle }: TPostViewPageProps) {
   let pageTitle = 'Create New Post';
   let post = null;
   const decodedPostTitle = decodeURIComponent(postTitle);
@@ -20,8 +19,7 @@ export default async function ProductViewPage({ postTitle }: TPostViewPageProps)
       notFound();
     }
     pageTitle = `Edit Post`;
-    // console.log('dynamic post title route with post:', post);
   }
   const categories = await prisma.category.findMany();
-  return <ProductForm initialData={post} pageTitle={pageTitle} categories={categories} />;
+  return <PostForm initialData={post} pageTitle={pageTitle} categories={categories} />;
 }

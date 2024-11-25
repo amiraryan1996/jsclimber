@@ -8,22 +8,33 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Product } from '@/constants/data';
 import { Edit, MoreHorizontal, Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { TPost } from '../../../_types';
+import { deletePost } from '@/app/dashboard/_actions/delete-post';
 
 interface CellActionProps {
-  data: Product;
+  data: TPost;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
-  const onConfirm = async () => {};
+  const onConfirm = async () => {
+    setLoading(true);
+    try {
+      await deletePost(data.id);
+      //  !Revalidate UI state
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+    }
+    setLoading(false);
+    setOpen(false);
+  };
 
   return (
     <>
@@ -43,7 +54,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
-          <DropdownMenuItem onClick={() => router.push(`/dashboard/product/${data.id}`)}>
+          <DropdownMenuItem onClick={() => router.push(`/dashboard/product/${data.title}`)}>
             <Edit className="mr-2 h-4 w-4" /> Update
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setOpen(true)}>

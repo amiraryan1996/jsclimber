@@ -24,8 +24,6 @@
     "types": ["node"]
   },
   "include": [
-    // ! https://react-svgr.com/docs/next/
-    "svgr.d.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",

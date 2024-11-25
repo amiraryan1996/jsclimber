@@ -169,4 +169,11 @@ export const navItems: NavItem[] = [
     isActive: false,
     items: [], // No child items
   },
+  {
+    title: 'Post',
+    url: '/dashboard/post',
+    icon: 'notePad',
+    isActive: false,
+    items: [], // No child items
+  },
 ];

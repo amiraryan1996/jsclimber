@@ -1,23 +1,75 @@
-generator client {
-  provider = "prisma-client-js"
-  binaryTargets = ["native", "rhel-openssl-1.1.x"]
-}
-datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
-}
-model User {
-  id           String    @id @default(cuid())
-  sessions     Session[]
-  firstName    String
-  lastName     String
-  email        String    @unique
-  passwordHash String
-}
+  // prisma/schema.prisma
+  generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["driverAdapters"]
+  }
 
-model Session {
-  id        String   @id
-  expiresAt DateTime
-  userId    String
-  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
-}
+  datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+  }
+
+  model User {
+    id           String    @id @default(cuid())
+    sessions     Session[]
+    firstName    String
+    lastName     String
+    email        String    @unique
+    passwordHash String
+    role         Role      @default(USER) // Admin or regular user
+    posts        Post[]    @relation("AuthorPosts")
+    pages        Page[]    @relation("AuthorPages")
+
+  }
+
+  model Session {
+    id        String   @id
+    expiresAt DateTime
+    userId    String
+    user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+  }
+
+  model Post {
+    id          String     @id @default(cuid())
+    title       String
+    description String
+    image       String
+    status      PostStatus @default(PENDING) // Pending, Approved, Rejected
+    createdAt   DateTime   @default(now()) // Automatically set on creation
+    updatedAt   DateTime   @updatedAt // Automatically updated on any modification
+    authorId    String
+    author      User       @relation("AuthorPosts", fields: [authorId], references: [id])
+    categoryId  String
+    category    Category   @relation(fields: [categoryId], references: [id])
+  }
+
+  model Category {
+    id    String @id @default(cuid())
+    name  String @unique
+    posts Post[]
+    Page  Page[]
+  }
+
+  enum Role {
+    USER
+    ADMIN
+  }
+
+  enum PostStatus {
+    PENDING
+    APPROVED
+    REJECTED
+  }
+
+  model Page {
+    title       String
+    description String
+    categoryId  String
+    authorId    String
+    content     String
+    id          Int      @id @default(autoincrement())
+    author      User     @relation("AuthorPages", fields: [authorId], references: [id])
+    category    Category @relation(fields: [categoryId], references: [id])
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+  }

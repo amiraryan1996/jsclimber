@@ -22,7 +22,7 @@ export function Breadcrumbs() {
           <Fragment key={item.title}>
             {index !== items.length - 1 && (
               <BreadcrumbItem className="hidden md:block">
-                <BreadcrumbLink href={item.link}>{item.title}</BreadcrumbLink>
+                <BreadcrumbLink href={item.link}>{decodeURIComponent(item.title)}</BreadcrumbLink>
               </BreadcrumbItem>
             )}
             {index < items.length - 1 && (
@@ -30,7 +30,9 @@ export function Breadcrumbs() {
                 <Slash />
               </BreadcrumbSeparator>
             )}
-            {index === items.length - 1 && <BreadcrumbPage>{item.title}</BreadcrumbPage>}
+            {index === items.length - 1 && (
+              <BreadcrumbPage>{decodeURIComponent(item.title)}</BreadcrumbPage>
+            )}
           </Fragment>
         ))}
       </BreadcrumbList>

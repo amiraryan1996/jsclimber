@@ -1,7 +1,10 @@
 'use client';
-import { FileUploader } from '@/components/file-uploader';
-import { Button } from '@/components/ui/button';
+import { TPost } from '../../_types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
   FormControl,
@@ -10,7 +13,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -18,37 +20,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { createPage } from '../_actions/create-page';
+import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-import { TPost } from '../../_types';
-import { uploadePost } from '../../_actions/update-post';
-import { uploadImage } from '../../_actions/upload-image';
-import { useState } from 'react';
-
-const MAX_FILE_SIZE = 5000000;
-const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+// import Editor from '@/features/rich-text-editor/plate-ui-editor';
+import { initialEditorValue } from '@/features/rich-text-editor/constants';
 
 const formSchema = z.object({
-  image: z
-    .any()
-    .refine((files) => files?.length == 1, 'Image is required.')
-    .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, `Max file size is 5MB.`)
-    .refine(
-      (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-      '.jpg, .jpeg, .png and .webp files are accepted.',
-    ),
   title: z.string().min(2, {
     message: 'Product name must be at least 2 characters.',
   }),
-  category: z.string(),
   description: z.string().min(10, {
     message: 'Description must be at least 10 characters.',
   }),
+  categoryId: z.string(),
 });
 
-export default function ProductForm({
+const PostForm = ({
   initialData,
   pageTitle,
   categories,
@@ -56,70 +44,43 @@ export default function ProductForm({
   initialData: TPost | null;
   pageTitle: string;
   categories: { name: string; id: string }[];
-}) {
+}) => {
   const defaultValues = {
     title: initialData?.title || '',
-    category: initialData?.categoryId
+    description: initialData?.description || '',
+    categoryId: initialData?.categoryId
       ? categories.find((cat) => cat.id === initialData.categoryId)?.name || ''
       : '',
-    description: initialData?.description || '',
   };
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     values: defaultValues,
   });
-  const [relativePath, setRelativePath] = useState('');
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      const updatedPost = await uploadePost(initialData?.id || '', {
-        ...values,
-        image: relativePath, // Pass only the relative file path to the server action
-      });
 
-      console.log('Post updated successfully:', updatedPost);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const localValue = typeof window !== 'undefined' && localStorage.getItem('editorContent');
+    const editorData = localValue ? JSON.parse(localValue) : initialEditorValue;
+
+    const payload = { ...values, ...{ content: editorData } };
+    console.log('payload :', payload);
+    console.log('editor data type :', typeof editorData);
+    try {
+      console.log(payload);
+      await createPage(payload);
     } catch (error) {
       console.error('Error submitting form:', error);
     }
   }
-  async function uploadFile(files: File[]) {
-    const formData = new FormData();
-    formData.append('file', files[0]);
-    setRelativePath(await uploadImage(formData));
-  }
+
   return (
     <Card className="mx-auto w-full">
       <CardHeader>
         <CardTitle className="text-left text-2xl font-bold">{pageTitle}</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-8">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="image"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Image</FormLabel>
-                  <FormControl>
-                    <FileUploader
-                      value={field.value}
-                      onValueChange={field.onChange}
-                      maxFiles={1}
-                      maxSize={MAX_FILE_SIZE}
-                      // accept={ACCEPTED_IMAGE_TYPES}
-                      // disabled={loading}
-                      // progresses={progresses}
-                      // pass the onUpload function here for direct upload
-                      // onUpload={uploadFiles}
-                      onUpload={(files: File[]) => uploadFile(files)}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <FormField
                 control={form.control}
@@ -136,7 +97,7 @@ export default function ProductForm({
               />
               <FormField
                 control={form.control}
-                name="category"
+                name="categoryId"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Category</FormLabel>
@@ -148,7 +109,7 @@ export default function ProductForm({
                       </FormControl>
                       <SelectContent>
                         {categories.map((item, index) => (
-                          <SelectItem key={index} value={item.name}>
+                          <SelectItem key={index} value={item.id}>
                             {item.name}
                           </SelectItem>
                         ))}
@@ -176,10 +137,13 @@ export default function ProductForm({
                 </FormItem>
               )}
             />
-            <Button type="submit">Add Product</Button>
+            {/* <Editor /> */}
+            <Button type="submit">Add Post</Button>
           </form>
         </Form>
       </CardContent>
     </Card>
   );
-}
+};
+
+export default PostForm;

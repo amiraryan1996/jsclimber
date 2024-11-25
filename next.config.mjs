@@ -36,6 +36,11 @@ const nextConfig = {
         hostname: 'dummyimage.com',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+        port: '',
+      },
     ],
   },
   transpilePackages: ['geist'],

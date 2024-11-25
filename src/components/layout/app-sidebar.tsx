@@ -51,7 +51,7 @@ import { UserNav } from './user-nav';
 import { signOut } from '@/features/auth/actions/sign-out';
 
 export const company = {
-  name: 'Acme Inc',
+  name: 'company',
   logo: GalleryVerticalEnd,
   plan: 'Enterprise',
 };
